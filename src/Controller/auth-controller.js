@@ -42,8 +42,19 @@ class AuthController {
         }
     }
     // [GET] /api/v1/auth/  Lay san pham
-    getDataProduct = (req,res,next) => {
-        
+    CurrentProduct = async (req, res, next) => {
+        try {
+
+            const {product} = await authService.CurrentProduct();
+
+            res.status(status.OK).json({
+                message: "todayProduct",
+                data: product
+            });
+
+        } catch (error) {
+            next(error);
+        }
     }
     //[PUT] /api/v1/auth/forgot-password
 
