@@ -7,7 +7,7 @@ const Import = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
-    time: Date,
+    time: String,
     total: Number,
     totalPrice: Number,
     source: String,

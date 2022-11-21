@@ -7,7 +7,7 @@ const Export = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
-    time: Date,
+    time: String,
     quantity: Number
 });
 
