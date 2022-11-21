@@ -45,7 +45,7 @@ module.exports.FormatID = (numberOfCollection) => {
 };
 
 //generate ID product
-module.exports.FormatID = (numberOfCollectionProduct) => {
+module.exports.FormatIDProduct = (numberOfCollectionProduct) => {
     resultNewID = numberOfCollectionProduct + "";
     while (resultNewID.length < 7) {
         resultNewID = "0" + resultNewID;
