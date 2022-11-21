@@ -8,7 +8,7 @@ route.post('/register', authController.register);
 route.post('/login', authController.login);
 
 
-route.get('/', authController.CurrentProduct);
+route.post('/', authController.CurrentProduct);
 //route.post('/forgotPassword', );
 
 //route.put('/forgotPassword', );
