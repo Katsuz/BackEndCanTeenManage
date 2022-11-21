@@ -1,5 +1,5 @@
 const {status,expire} = require('../Constant');
-const {userRepository, roleRepository} = require('./../Database');
+const {userRepository, roleRepository, productRepository} = require('./../Database');
 
 const {
     genarateSalt,
@@ -69,6 +69,15 @@ const authService = {
             const token = GenerateToken(payload, ACCESS_TOKEN, expire.ACCESS_TOKEN_EXPIRE);
             return formatData({payload, accessToken: token});
         } catch (err) {
+            throw err;
+        }
+    },
+    CurrentProduct: async() => {
+        try{
+
+            const curProduct = await productRepository.getCurrentProduct();
+            return formatData({product: curProduct})
+        } catch(err) {
             throw err;
         }
     }
