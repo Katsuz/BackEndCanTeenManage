@@ -41,6 +41,10 @@ class AuthController {
             next(err);
         }
     }
+    // [GET] /api/v1/auth/  Lay san pham
+    getDataProduct = (req,res,next) => {
+        
+    }
     //[PUT] /api/v1/auth/forgot-password
 
     //[POST] /api/v1/auth/forgot-password

@@ -11,4 +11,6 @@ route.post('/login', authController.login);
 
 //route.put('/forgotPassword', );
 
+//route.get('/', );
+
 module.exports = route;
