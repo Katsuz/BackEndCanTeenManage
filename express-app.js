@@ -4,10 +4,10 @@ const cors = require('cors');
 const {mongoConnection} = require('./src/Database');
 const {PORT} = require('./src/Config');
 const morgan = require('morgan');
-
 var bodyParser = require('body-parser');
 const router = require('./src/Router');
 
+const {errorHandlingMDW} = require('./src/Middleware');
 const canteenSchedule = require('./src/Schedule/index');
 
 module.exports = async function(app) {
@@ -22,8 +22,11 @@ module.exports = async function(app) {
     // canteen schedule
     canteenSchedule.run();
 
-    //bat loi
+    //Khoi tao
     router(app);
+    
+    //handle loi
+    app.use(errorHandlingMDW.handleErrorResquest)
 
     
 }

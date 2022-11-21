@@ -19,9 +19,9 @@ const authService = {
         try{
             const user = userRepository.FindUserByEmail(email);
             if(user){//Neu ton tai thi tra ve
-                // throw new Error('Email has existed',{
-                //     cause: status.NOT_FOUND
-                // })
+                throw new Error('Email has existed',{
+                    cause: status.NOT_FOUND
+                })
             }
             const numberCollection = await userRepository.getNumberOfCollection();
             const newIdUser = FormatID(numberCollection.length);
@@ -47,16 +47,16 @@ const authService = {
         try{
             const user = await userRepository.FindUserByEmail(email);
             if(!user){//Neu khong ton tai thi tra ve
-                // throw new Error('User not exist',{
-                //     cause: status.NOT_FOUND
-                // })
+                throw new Error('User not exist',{
+                    cause: status.NOT_FOUND
+                })
             }
             // check password
             const validPassword = await validatePassword(password,user.password);
             if(!validPassword) {
-                // throw new Error('incorrect password', {
-                //     cause: status.BAD_REQUEST
-                // });
+                throw new Error('incorrect password', {
+                    cause: status.BAD_REQUEST
+                });
             }
             // update sate user
             userRepository.UpdateSateUserById(user._id,true);
