@@ -8,16 +8,19 @@ const morgan = require('morgan');
 var bodyParser = require('body-parser');
 const router = require('./src/Router');
 
+const canteenSchedule = require('./src/Schedule/index');
 
 module.exports = async function(app) {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.json());
     app.use(cors());
     //app.use(morgan("common"));
-
-
+    
     // connect to mongodb
     await mongoConnection();
+
+    // canteen schedule
+    canteenSchedule.run();
 
     //bat loi
     router(app);
