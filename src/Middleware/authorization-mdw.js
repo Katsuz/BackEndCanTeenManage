@@ -67,13 +67,17 @@ const authorizationMDW = {
                         symbol = '&';
                     })
                 }
+                console.log(req.originalUrl);
+                console.log(url);
                 return req.originalUrl === url;
+
             })) {
                 return res.status(status.UN_AUTHORIZED).json({
                     message: "You don't have this permissons",
                     data: null
                 })
             }
+            next();
         } catch(err) {
             res.status(status.FORBIDDEN).json({
                 message: err.message

@@ -41,6 +41,23 @@ class AuthController {
             next(err);
         }
     }
+
+    //[GET] /api/v1/auth
+    CurrentProduct = async (req, res, next) => {
+        try {
+
+            const {product} = await authService.CurrentProduct();
+
+            res.status(status.OK).json({
+                message: "todayProduct",
+                data: product
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
     //[PUT] /api/v1/auth/forgot-password
 
     //[POST] /api/v1/auth/forgot-password
