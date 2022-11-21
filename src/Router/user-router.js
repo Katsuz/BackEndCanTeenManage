@@ -6,7 +6,7 @@ const userController = new UserController();
 
 //route.get('/changeProfile', );
 
-//route.get('/changeProfile', );
+//route.put('/changeProfile', );
 
 //route.put('/changePassword', );
 
