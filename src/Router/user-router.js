@@ -12,6 +12,6 @@ const userController = new UserController();
 
 //route.post('/changePassword', );
 
-route.post('/logout',authorizationMDW.checkPermission,userController.logout);
+route.post('/logout',authorizationMDW.checkUser,userController.logout);
 
 module.exports = route;
