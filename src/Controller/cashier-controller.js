@@ -327,19 +327,25 @@ class CashierController {
 
             let listProducts = req.body.product;
             
+            
+
             for (let i = 0; i < listProducts.length; i++){
                 let id = listProducts[i].id;
                 let number = listProducts[i].number;
-                
+               
                 let findO = await OnSell.
                     find({}).
                     populate('product');
             
                 for (let j = 0; j < findO.length; j++){
                     if (findO[j].product.id == id){
-                        findO[j].quantity = findO[j].quantity - number;
-                        await findO[j].save();
-                        break;
+
+                        if (number > findO[j].quantity){
+                            res.json({
+                                message: "fail"
+                            });
+                            return;
+                        }
                     }
                 }
             }
