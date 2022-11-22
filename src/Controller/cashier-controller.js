@@ -134,9 +134,9 @@ class CashierController {
                 //add good
                 let itemImport = {
                     productID: newProduct._id,
-                    time: listProducts[i].time,
-                    total: listProducts[i].total,
-                    totalPrice: listProducts[i].totalPrice,
+                    date: listProducts[i].date,
+                    quantity: listProducts[i].quantity,
+                    totalCost: listProducts[i].totalCost,
                     source: listProducts[i].source
                 }
                 let newImport = new ImportGoods(itemImport);
@@ -145,7 +145,7 @@ class CashierController {
                 //add inventory
                 let itemInventory = {
                     productID: newProduct._id,
-                    quantity: listProducts[i].total
+                    quantity: listProducts[i].quantity
                 }
                 let newInventory = new Inventory(itemInventory);
                 await newInventory.save();
@@ -172,10 +172,10 @@ class CashierController {
                     id: findImport[i].productID.id,
                     name: findImport[i].productID.name,
                     type: findImport[i].productID.type,
-                    total: findImport[i].total,
-                    totalPrice: findImport[i].totalPrice,
+                    quantity: findImport[i].quantity,
+                    totalCost: findImport[i].totalCost,
                     source: findImport[i].source,
-                    time: findImport[i].time
+                    date: findImport[i].date
                 }
                 importArr.push(item);
             }
@@ -242,7 +242,7 @@ class CashierController {
             let id = req.body.id;
             let quantity = req.body.quantity;
             let today = new Date();
-            let timeExport = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+            let timeExport = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
             let findProduct = await Product.find({id: id});
             
@@ -325,27 +325,27 @@ class CashierController {
     createBill = async (req, res, next) => {
         try {
 
-            let listProducts = req.body;
+            let listProducts = req.body.product;
             
-
-            // let findExport = await ExportGoods.
-            //     find({}).
-            //     populate('productID');
-
-            // let exportArr = [];
-            // for (let i = 0; i < findExport.length; i++) {
-            //     let item = {
-            //         id: findExport[i].productID.id,
-            //         name: findExport[i].productID.name,
-            //         type: findExport[i].productID.type,
-            //         quantity: findExport[i].quantity,
-            //         time: findExport[i].time
-            //     }
-            //     exportArr.push(item);
-            // }
+            for (let i = 0; i < listProducts.length; i++){
+                let id = listProducts[i].id;
+                let number = listProducts[i].number;
+                
+                let findO = await OnSell.
+                    find({}).
+                    populate('product');
+            
+                for (let j = 0; j < findO.length; j++){
+                    if (findO[j].product.id == id){
+                        findO[j].quantity = findO[j].quantity - number;
+                        await findO[j].save();
+                        break;
+                    }
+                }
+            }
 
             res.json({
-                products: exportArr
+                message: "succesfull"
             });
 
         } catch (error) {

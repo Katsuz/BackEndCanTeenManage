@@ -3,7 +3,8 @@ const route = express.Router();
 const {CashierController} = require('./../Controller');
 const {authorizationMDW} = require('./../Middleware');
 
-
+//POST api/v1/cashier/createBill
+route.post('/createBill',authorizationMDW.checkPermission, CashierController.createBill);
 
 //POST api/v1/cashier/product 
 route.post('/addProduct',authorizationMDW.checkPermission, CashierController.insertFood);
