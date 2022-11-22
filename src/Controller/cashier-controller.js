@@ -321,6 +321,37 @@ class CashierController {
             next(error);
         }
     }
+
+    createBill = async (req, res, next) => {
+        try {
+
+            let listProducts = req.body;
+            
+
+            // let findExport = await ExportGoods.
+            //     find({}).
+            //     populate('productID');
+
+            // let exportArr = [];
+            // for (let i = 0; i < findExport.length; i++) {
+            //     let item = {
+            //         id: findExport[i].productID.id,
+            //         name: findExport[i].productID.name,
+            //         type: findExport[i].productID.type,
+            //         quantity: findExport[i].quantity,
+            //         time: findExport[i].time
+            //     }
+            //     exportArr.push(item);
+            // }
+
+            res.json({
+                products: exportArr
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new CashierController

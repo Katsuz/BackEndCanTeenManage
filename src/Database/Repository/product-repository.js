@@ -53,7 +53,26 @@ const productRepository = {
         }
 
         //return todayProduct;
-    }
+    },
+
+    minusQuantityCurrentProduct: async (id, number) => {
+        try {
+            let findO = await OnSell.
+                find({}).
+                populate('product');
+            
+            for (let i = 0; i < findO.length; i++){
+                if (findO[i].product.id == id){
+                    findO[i].quantity = findO[i].quantity - number;
+                    await findO[i].save();
+                    break;
+                }
+            }
+
+        } catch(err) {
+            throw err;
+        }
+    },
 }
 
 module.exports = productRepository;

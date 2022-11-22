@@ -6,7 +6,7 @@ module.exports = {
     ImportGoods: require('./products/import-model'),
     Inventory: require('./products/inventory-model'),
     OnSell: require('./products/onSell-model'),
-    Product: require('./products/product-model')
-    
+    Product: require('./products/product-model'),
+    Position: require('./position/position-model')
 }
 
