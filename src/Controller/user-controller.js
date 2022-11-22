@@ -57,6 +57,21 @@ class UserController {
         } catch(err) {
             next(err);
         }
+    };
+
+    addProperty = async(req,res,next) => {
+        try{
+            const {_id} = req.user;
+            const {codePrice} = req.body;
+            const {userUpdated} = await userService.addProperty(_id,codePrice);
+
+            res.status(status.OK).json({
+                message: 'add property user successfuly',
+                data: userUpdated,
+            })
+        } catch(err) {
+            next(err);
+        }
     }
 
 

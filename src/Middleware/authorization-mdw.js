@@ -41,9 +41,8 @@ const authorizationMDW = {
                     data: null
                 })
             }
-            console.log(user);
+            
             const {roleID} = await user.populate('roleID');
-            console.log(roleID);
             const {permissions} = await roleID.populate('permissions');
 
             if(!permissions.some((e) => {

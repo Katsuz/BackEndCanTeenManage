@@ -23,4 +23,7 @@ route.post('/exportGoods', authorizationMDW.checkPermission, CashierController.e
 //POST api/v1/cashier/exportHistory
 route.post('/exportHistory', CashierController.exportHistory);
 
+//POST api/v1/cashier/createCode
+//route.post('/createCode',authorizationMDW.checkPermission, CashierController.createCode );
+
 module.exports = route

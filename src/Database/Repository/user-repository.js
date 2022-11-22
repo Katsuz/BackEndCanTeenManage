@@ -1,5 +1,4 @@
 const {User} = require('../Model');//Lay data tu user
-const { updateOne } = require('../Model/products/product-model');
 //const { updateOne } = require('../Model/users/permision-model');
 
 const userRepository = {
@@ -86,6 +85,17 @@ const userRepository = {
         }
     },
 
+    UpdatePropertyUserById: async(id, newProperty) => {
+        try{
+            await User.updateOne({_id: id},{
+                $set:{
+                    property: newProperty
+                }
+            })
+        } catch(err){   
+            throw err;
+        }
+    }
     
 }
 

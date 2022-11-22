@@ -7,6 +7,7 @@ module.exports = {
     Inventory: require('./products/inventory-model'),
     OnSell: require('./products/onSell-model'),
     Product: require('./products/product-model'),
-    Position: require('./position/position-model')
+    Position: require('./position/position-model'),
+    Moneycode: require('./moneycode/moneycode-model')
 }
 

@@ -1,5 +1,5 @@
 const {status,expire} = require('../Constant');
-const {userRepository, roleRepository} = require('./../Database');
+const {userRepository, roleRepository, moneycodeRepository} = require('./../Database');
 
 const {
     genarateSalt,
@@ -71,6 +71,44 @@ const userService = {
             const passwordHashed = await createHashPassword(newPassword,salt);
 
             await userRepository.UpdatePasswordUserById(id, passwordHashed);
+
+            const userUpdated = await userRepository.FindUserById(id);
+            return formatData({
+                userUpdated
+            })
+
+        } catch (err) {
+            throw err;
+        }
+    },
+
+    addProperty: async(id, codePrice)=> {
+        try {
+            const user =  await userRepository.FindUserById(id);
+            if (!user) {
+                throw new Error('user does not exist', {
+                    cause: status.NOT_FOUND
+                })
+            };
+            const listCode = await moneycodeRepository.getAllMoneyCode();
+
+            //check code
+            if(!listCode.some((e) => {
+                return e.code === codePrice;
+            })) {
+                throw new Error('your code input not exist', {
+                    cause: status.NOT_FOUND
+                })
+            }
+            
+            //Lay gia tien tu code
+            const _price = await moneycodeRepository.getPriceFromCode(codePrice);
+            //Lay tien nguoi dung
+            //Cong tien
+            const newProperty = _price.price + user.property;
+            //Update tien moi
+
+            await userRepository.UpdatePropertyUserById(id, newProperty);
 
             const userUpdated = await userRepository.FindUserById(id);
             return formatData({

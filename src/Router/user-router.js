@@ -10,6 +10,9 @@ route.post('/profile', authorizationMDW.checkUser, userController.updateProfileU
 
 //route.put('/changePassword', );
 
+//POST api/v1/user/addProperty
+route.post('/addProperty',authorizationMDW.checkUser, userController.addProperty );
+
 route.post('/changePassword', authorizationMDW.checkUser, userController.updatePasswordUser);
 
 route.post('/logout',authorizationMDW.checkUser,userController.logout);
