@@ -51,11 +51,48 @@ const userRepository = {
         }
     },
 
-    getNumberOfCollection: async() => {
+    GetNumberOfCollection: async() => {
         try{
             let result = await User.find();
             return result;
         } catch (err) {
+            throw err;
+        }
+    },
+
+    UpdateProfileUserById: async(id,username) => {
+        try{
+            await User.updateOne({_id: id},{
+                $set:{
+                    username: username
+                }
+            })
+            const user = await User.findOne({_id: id});
+            return user;
+        } catch(err){   
+            throw err;
+        }
+    },
+    UpdatePasswordUserById: async(id,passwordHashed) => {
+        try{
+            await User.updateOne({_id: id},{
+                $set:{
+                    password: passwordHashed
+                }
+            })
+        } catch(err){   
+            throw err;
+        }
+    },
+
+    UpdatePropertyUserById: async(id, newProperty) => {
+        try{
+            await User.updateOne({_id: id},{
+                $set:{
+                    property: newProperty
+                }
+            })
+        } catch(err){   
             throw err;
         }
     }
