@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const CashierController = require('./../Controller/cashier-controller');
+const {CashierController} = require('./../Controller');
 const {authorizationMDW} = require('./../Middleware');
 
 
