@@ -8,18 +8,45 @@ const productRepository = {
             let findO = await OnSell.
                 find({}).
                 populate('product');
-            let todayProduct = [];
+            let riceArr = [];
+            let noodlesArr = [];
+            let gasArr = [];
+            let noGasArr = [];
+            let cakeArr = [];
             for (let i = 0; i < findO.length; i++) {
                 let item = {
                     id: findO[i].product.id,
-                    type: findO[i].product.type,
                     img: findO[i].product.img,
-                    total: findO[i].quantity,
+                    quantity: findO[i].quantity,
                     name: findO[i].product.name,
                     price: findO[i].product.price
                 }
-                todayProduct[i] = item;
+
+                if (findO[i].product.type == "rice"){
+                    riceArr.push(item);
+                }
+                if (findO[i].product.type == "noodles"){
+                    noodlesArr.push(item);
+                }
+                if (findO[i].product.type == "gas"){
+                    gasArr.push(item);
+                }
+                if (findO[i].product.type == "noGas"){
+                    noGasArr.push(item);
+                }
+                if (findO[i].product.type == "cake"){
+                    cakeArr.push(item);
+                }
             }
+            
+            let todayProduct = {
+                "rice": riceArr,
+                "noodles": noodlesArr,
+                "gas": gasArr,
+                "noGas": noGasArr,
+                "cake": cakeArr
+            };
+
             return todayProduct;
         } catch(err) {
             throw err;
