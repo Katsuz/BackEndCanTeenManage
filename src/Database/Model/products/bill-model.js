@@ -7,7 +7,7 @@ const Bill = new Schema({
     idUser: String,
     idGood: [{
         type: Schema.Types.ObjectId,
-        ref: 'Position',
+        ref: 'Product',
     }],
     idPosition: [{
         type: Schema.Types.ObjectId,
