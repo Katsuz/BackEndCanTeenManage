@@ -23,11 +23,12 @@ const authService = {
                     cause: status.NOT_FOUND
                 })
             }
-            const numberCollection = await userRepository.getNumberOfCollection();
+            const numberCollection = await userRepository.GetNumberOfCollection();
             const newIdUser = FormatID(numberCollection.length);
+
             const salt = await genarateSalt();
             const passwordHashed = await createHashPassword(password,salt);
-            console.log(passwordHashed);
+            
             let _role = await roleRepository.GetRoleIdByRoleName(role);
             
             const newUser = await userRepository.CreateUser({
@@ -75,7 +76,7 @@ const authService = {
     CurrentProduct: async() => {
         try{
 
-            const curProduct = await productRepository.getCurrentProduct();
+            const curProduct = await productRepository.GetCurrentProduct();
             return formatData({product: curProduct})
         } catch(err) {
             throw err;

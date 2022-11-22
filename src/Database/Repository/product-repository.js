@@ -2,7 +2,7 @@ const { OnSell } = require('../Model');
 const { Product } = require('../Model');
 
 const productRepository = {
-    getCurrentProduct: async () => {
+    GetCurrentProduct: async () => {
         try {
 
             let findO = await OnSell.
