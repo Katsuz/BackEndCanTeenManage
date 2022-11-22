@@ -5,10 +5,17 @@ const Schema = mongoose.Schema;
 const Bill = new Schema({
     idBill: String,
     idUser: String,
-    idGood: [String],
-    idPosition: [String],
-    status: [String],
+    idGood: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Position',
+    }],
+    idPosition: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Position',
+    }],
+    statusComplete: [String],
     quantity: [Number],
+    typeBill: String,
     time: Date
 });
 
