@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const Position = new Schema({
     idPos: String,
-    status: Boolean,
+    isEmpty: Boolean,
     letter: String,
     number: Number,
     color: String
