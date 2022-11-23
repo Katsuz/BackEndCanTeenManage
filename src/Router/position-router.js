@@ -6,7 +6,7 @@ const {authorizationMDW} = require('./../Middleware');
 
 
 //POST api/v1/position/createPosition
-route.post('/createPosition', PositionController.createPositionCode);
+route.post('/createPosition', authorizationMDW.checkPermission, PositionController.createPositionCode);
 
 //POST api/v1/position/setPosition
 route.post('/setPosition', PositionController.setPositionCode);

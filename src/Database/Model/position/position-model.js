@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 //const ObjectId = Schema.ObjectId;
 
 const Position = new Schema({
-    idPosition: String,
+    idPos: String,
     status: Boolean,
     letter: String,
     number: Number,

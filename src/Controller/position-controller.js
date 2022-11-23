@@ -18,7 +18,11 @@ class PositionController {
 
     setPositionCode = async (req, res, next) => {
         try {
-            console.log(req.body);
+            let corlorArr = req.body.color;
+            let letterArr = req.body.letter;
+            let numPCArr = req.body.numPerColor;
+
+            
 
             res.json({
                 message: "success"
