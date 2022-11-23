@@ -44,39 +44,31 @@ class PositionController {
         }
     }
 
-    setPositionCode = async (req, res, next) => {
+    setEmptyPositionCode = async (req, res, next) => {
         try {
-            let corlorArr = req.body.color;
-            let letterArr = req.body.letter;
-            let numPC = req.body.numPerColor;
+            let color = req.body.color;
+            let letter = req.body.letter;
+            let number = req.body.number;
 
-            await Position.deleteMany(); //delete old position code
-
-            for (let i = 0; i < letterArr.length; i++) {
-                for (let j = 0; j < corlorArr.length; j++) {
-                    for (let k = 1; k <= numPC; k++) {
-
-                        let status = false;
-                        let letter = letterArr[i];
-                        let number = k;
-                        let color = corlorArr[j].color;
-                        let id = letter + number;
-                        let itemPosition = {
-                            idPos: id,
-                            status: status,
-                            letter: letter,
-                            number: number,
-                            color: color
-                        }
-                        
-                        let newPosition = new Position(itemPosition);
-                        await newPosition.save();
-                    }
-                }
-            }
+            await Position
+                    .findOneAndUpdate({color: color, letter: letter, number: number},
+                        {isEmpty: true});
 
             res.json({
                 message: "success"
+            })
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getPositionTableColor = async (req, res, next) => {
+        try {
+            let temp = await Position.find().distinct('color');
+            
+            res.json({
+                colors: temp
             })
 
         } catch (error) {
