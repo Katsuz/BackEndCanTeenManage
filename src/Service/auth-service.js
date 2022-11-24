@@ -63,7 +63,7 @@ const authService = {
             userRepository.UpdateSateUserById(user._id,true);
             user.status = true;
 
-            // get data into token
+            // get data 
             const {password: _password, ...payload} = user._doc;
 
             //create token

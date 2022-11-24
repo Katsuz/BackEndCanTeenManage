@@ -1,5 +1,6 @@
 const {status,expire} = require('../Constant');
-const {userRepository, roleRepository, moneycodeRepository} = require('./../Database');
+const {userRepository, roleRepository, moneycodeRepository, billRepository} = require('./../Database');
+const billService = require('./../Public/billService')
 
 const {
     genarateSalt,
@@ -116,6 +117,36 @@ const userService = {
             })
 
         } catch (err) {
+            throw err;
+        }
+    },
+
+    getUncompleteBill: async(id) => {
+        try{
+
+            const idUncompleteBill = await billService.getOneUncompletedBillByUser_ID(id);
+            const billUncomplete = await billRepository.getBillByIdBill(idUncompleteBill);
+            // console.log("day la thong tin bang");
+            // console.log(billUncomplete);
+            let data = [];
+            for(let i = 0; i < billUncomplete.idProducts.length ; i++){
+                let temp = {
+                    idProduct: billUncomplete.idProducts[i].id,
+                    nameProduct: billUncomplete.idProducts[i].name,
+                    position: billUncomplete.idPositions[i].idPos,
+                    colorPos: billUncomplete.idPositions[i].color,
+                    statusProduct: billUncomplete.statusProducts[i],
+                    quantity: billUncomplete.quantity[i]
+                };
+                data.push(temp);
+            }
+            const idBill = billUncomplete.idBill
+            // console.log(result);
+            return formatData({
+                idBill,
+                data
+            })
+        } catch(err) {
             throw err;
         }
     }

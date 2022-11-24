@@ -279,6 +279,21 @@ class UserController {
         } catch(err) {
             next(err);
         }
+    };
+
+    getUncompleteBill = async(req,res,next) =>{
+        try{
+
+            const {_id} = req.user;
+            const billUncomplete = await userService.getUncompleteBill(_id);
+            res.status(status.OK).json({
+                message: 'successfully',
+                billUncomplete
+            })
+        } catch(err) {
+            next(err);
+        }
+
     }
 }
 

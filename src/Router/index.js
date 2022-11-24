@@ -10,5 +10,6 @@ module.exports = function(app) {
     
     app.use('/api/v1/user',userRouter);
 
-    app.use('/api/v1/cashier', cashierRouter)
+    app.use('/api/v1/cashier', cashierRouter);
+
 }

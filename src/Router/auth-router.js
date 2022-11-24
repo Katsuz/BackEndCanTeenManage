@@ -9,10 +9,5 @@ route.post('/login', authController.login);
 
 
 route.get('/', authController.CurrentProduct);
-//route.post('/forgotPassword', );
-
-//route.put('/forgotPassword', );
-
-//route.get('/', );
 
 module.exports = route;

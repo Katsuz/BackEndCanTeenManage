@@ -92,7 +92,7 @@ module.exports.getOneUncompletedBillByUser_ID = async function (_id){
     const findBills = await Bill.find({idUser: _id});
     let idBillArr = [];
     for (let i = 0; i < findBills.length; i++){
-        if (!isCompletedBill(findBills[0])){
+        if (!isCompletedBill(findBills[i])){
             idBillArr.push(findBills[i]._id);
         }
     }
@@ -105,7 +105,7 @@ module.exports.getAllUncompletedBillByUser_ID = async function (){
     const findBills = await Bill.find();
     let idBillArr = [];
     for (let i = 0; i < findBills.length; i++){
-        if (!isCompletedBill(findBills[0])){
+        if (!isCompletedBill(findBills[i])){
             idBillArr.push(findBills[i]._id);
         }
     }
