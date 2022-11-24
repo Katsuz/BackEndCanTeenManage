@@ -13,7 +13,11 @@ const canteenSchedule = require('./src/Schedule/index');
 module.exports = async function(app) {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.json());
-    app.use(cors());
+    app.use(cors({
+        origin: '*',
+        credentials: true
+    }));
+    
     //app.use(morgan("common"));
     
     // connect to mongodb

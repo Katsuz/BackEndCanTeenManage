@@ -15,9 +15,6 @@ route.post('/addProperty',authorizationMDW.checkUser, userController.addProperty
 
 route.post('/changePassword', authorizationMDW.checkUser, userController.updatePasswordUser);
 
-//mua hang, so luong mon an, ten mon -> tru cai so luong trong bang Onsell
-// -> tao ma vi tri (check colection position) -> true false
-//-> them mot cai hoa don
 
 route.post('/logout',authorizationMDW.checkUser,userController.logout);
 
