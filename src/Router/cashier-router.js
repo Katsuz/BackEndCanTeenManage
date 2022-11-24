@@ -30,6 +30,15 @@ route.post('/getUnCompletedBill', CashierController.getUnCompletedBill);
 //POST api/v1/cashier/getCompletedBill
 route.post('/getCompletedBill', CashierController.getCompletedBill);
 
+//POST api/v1/cashier/getTodayRevenue
+route.post('/getTodayRevenue', CashierController.getTodayRevenue);
+
+//POST api/v1/cashier/getMonthRevenue
+route.post('/getMonthRevenue', CashierController.getMonthRevenue);
+
+//POST api/v1/cashier/getRevenueInPeriodTime
+route.post('/getRevenueInPeriodTime', CashierController.getRevenueInPeriodTime);
+
 //POST api/v1/cashier/createCode
 //route.post('/createCode',authorizationMDW.checkPermission, CashierController.createCode );
 

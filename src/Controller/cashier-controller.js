@@ -478,6 +478,94 @@ class CashierController {
             next(error);
         }
     }
+
+    getTodayRevenue = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({});
+            let revenue = 0;
+            let today = new Date();
+            today = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            for (let i = 0; i < findBill.length; i++){
+                if (findBill[i].time.includes(today)){
+                    let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
+                    revenue += totalCost;
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                revenue: revenue
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getMonthRevenue = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({});
+            let revenue = 0;
+            let today = new Date();
+
+            let start = new Date (today.getFullYear() + '-' + (today.getMonth() + 1));
+            start = start.getTime();
+            let end = new Date (today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+            end = end.getTime();
+
+            for (let i = 0; i < findBill.length; i++){
+                let timeBill = findBill[i].time;
+                timeBill = timeBill.slice(6);
+                let time = new Date (timeBill);
+                time = time.getTime();
+
+                if (start <= time && time <= end){
+                    let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
+                    revenue += totalCost;
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                revenue: revenue
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getRevenueInPeriodTime = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({});
+            let revenue = 0;
+
+            let start = new Date (req.body.start);
+            start = start.getTime();
+            let end = new Date (req.body.end);
+            end = end.getTime();
+
+            for (let i = 0; i < findBill.length; i++){
+                let timeBill = findBill[i].time;
+                timeBill = timeBill.slice(6);
+                let time = new Date (timeBill);
+                time = time.getTime();
+
+                if (start <= time && time <= end){
+                    let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
+                    revenue += totalCost;
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                revenue: revenue
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new CashierController
