@@ -4,6 +4,7 @@ const { ImportGoods } = require('./../Database/Model');
 const { Inventory } = require('./../Database/Model');
 const { ExportGoods } = require('./../Database/Model');
 const { Bill } = require('./../Database/Model');
+const billservice = require('../Public/billService');
 
 
 
@@ -430,6 +431,47 @@ class CashierController {
 
             res.json({
                 message: "succesfull"
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getUnCompletedBill = async (req, res, next) => {
+        try {
+
+            let findBill = await Bill.find({});
+            let UnCompletedBillArr = [];
+            for (let i = 0; i < findBill.length; i++){
+                if (!billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online"){
+                    UnCompletedBillArr.push(await billservice.getBillInfo(findBill[i].idBill));
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                data: UnCompletedBillArr
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getCompletedBill = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({});
+            let completedBillArr = [];
+            for (let i = 0; i < findBill.length; i++){
+                if (billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online"){
+                    completedBillArr.push(await billservice.getBillInfo(findBill[i].idBill));
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                data: completedBillArr
             });
 
         } catch (error) {

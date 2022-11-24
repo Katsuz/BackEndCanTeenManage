@@ -75,7 +75,7 @@ module.exports.getBillInfo = async function (idBill){
     
 }
 
-function isCompletedBill(bill) {
+module.exports.isCompletedBill = function (bill) {
 
     const statusProductArr = bill.statusProducts;
     for (let i = 0; i < statusProductArr.length; i++){
