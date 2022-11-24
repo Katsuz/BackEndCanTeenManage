@@ -126,3 +126,24 @@ module.exports.setDoneStatusProductInBillByID = async function (idBill, idProduc
     }
 
 }
+
+module.exports.getBillTotalCost = async function (idBill){
+    
+    let findBill = await Bill.findOne({idBill: idBill})
+
+    let totalCost = 0;
+
+    for (let i = 0; i < findBill.idProducts.length; i++){
+        let num = findBill.quantity[i];
+
+        let findProduct = await Product.findOne({_id: findBill.idProducts[i]});
+
+
+        totalCost += findProduct.price * num;
+
+
+    }
+
+    return totalCost;
+    
+}
