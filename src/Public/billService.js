@@ -75,7 +75,7 @@ module.exports.getBillInfo = async function (idBill){
     
 }
 
-function isCompletedBill(bill) {
+module.exports.isCompletedBill = function (bill) {
 
     const statusProductArr = bill.statusProducts;
     for (let i = 0; i < statusProductArr.length; i++){
@@ -105,7 +105,7 @@ module.exports.getAllUncompletedBillByUser_ID = async function (){
     const findBills = await Bill.find();
     let idBillArr = [];
     for (let i = 0; i < findBills.length; i++){
-        if (!isCompletedBill(findBills[0])){
+        if (!isCompletedBill(findBills[i])){
             idBillArr.push(findBills[i]._id);
         }
     }
