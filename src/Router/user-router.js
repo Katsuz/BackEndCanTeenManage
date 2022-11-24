@@ -16,6 +16,12 @@ route.post('/addProperty',authorizationMDW.checkUser, userController.addProperty
 route.post('/changePassword', authorizationMDW.checkUser, userController.updatePasswordUser);
 
 
+//POST api/v1/user/createOnlineBill
+route.post('/createOnlineBill',authorizationMDW.checkUser, userController.createBill);
+
+//POST api/v1/user/confirmBill
+route.post('/confirmBill',authorizationMDW.checkUser, userController.confirmBill);
+
 route.post('/logout',authorizationMDW.checkUser,userController.logout);
 
 module.exports = route;

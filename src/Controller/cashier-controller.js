@@ -3,6 +3,7 @@ const { OnSell } = require('./../Database/Model');
 const { ImportGoods } = require('./../Database/Model');
 const { Inventory } = require('./../Database/Model');
 const { ExportGoods } = require('./../Database/Model');
+const { Bill } = require('./../Database/Model');
 
 
 
@@ -13,17 +14,17 @@ class CashierController {
             let daySell = parseInt(req.body.day);
 
             //delete Product won't sell
-            let findOldProduct = await Product.find({daysell: daySell});
-            for (let i = 0; i < findOldProduct.length; i++){
+            let findOldProduct = await Product.find({ daysell: daySell });
+            for (let i = 0; i < findOldProduct.length; i++) {
                 let isDelete = true;
                 let oldId = findOldProduct[i].id;
-                for (let j = 0; j < listProducts.length; j++){
-                    if (listProducts[j].id == oldId){
+                for (let j = 0; j < listProducts.length; j++) {
+                    if (listProducts[j].id == oldId) {
                         isDelete = false;
                         break;
                     }
                 }
-                if (isDelete){
+                if (isDelete) {
                     await Product.updateMany({ id: oldId }, { daysell: -1 });
                 }
             }
@@ -60,11 +61,11 @@ class CashierController {
                         daysell: daySell,
                         total: listProducts[i].total
                     }
-    
+
                     let newProduct = new Product(item);
                     await newProduct.save();
                 } else {
-                    let findP = await Product.find({id: listProducts[i].id});
+                    let findP = await Product.find({ id: listProducts[i].id });
                     findP[0].name = listProducts[i].name;
                     findP[0].price = listProducts[i].price;
                     findP[0].total = listProducts[i].total;
@@ -91,28 +92,28 @@ class CashierController {
             let newID = 0;
             let resultNewID = '';
             if (findP.length == 0) {
-                resultNewID = 'FF0000000';
+                resultNewID = 'HD0000000';
             } else {
                 let curID = findP[findP.length - 1].id;
 
                 curID = curID.slice(2);
                 newID = 1 + parseInt(curID[0]) * 1000000 + parseInt(curID[1]) * 100000 + parseInt(curID[2]) * 10000
-                        + parseInt(curID[3]) * 1000 + parseInt(curID[4]) * 100 + parseInt(curID[5]) * 10 + parseInt(curID[6]);
-                
+                    + parseInt(curID[3]) * 1000 + parseInt(curID[4]) * 100 + parseInt(curID[5]) * 10 + parseInt(curID[6]);
+
                 resultNewID = newID + '';
-                while (resultNewID.length < 7){
+                while (resultNewID.length < 7) {
                     resultNewID = '0' + resultNewID;
                 }
                 resultNewID = 'FF' + resultNewID;
             }
-            
+
 
             for (let i = 0; i < listProducts.length; i++) {
 
-                if (i != 0){
+                if (i != 0) {
                     newID++;
                     resultNewID = newID + '';
-                    while (resultNewID.length < 7){
+                    while (resultNewID.length < 7) {
                         resultNewID = '0' + resultNewID;
                     }
                     resultNewID = 'FF' + resultNewID;
@@ -166,7 +167,7 @@ class CashierController {
             let date = req.body.date;
 
             let findImport = await ImportGoods.
-                find({date: date}).
+                find({ date: date }).
                 populate('productID');
             let importArr = [];
             for (let i = 0; i < findImport.length; i++) {
@@ -196,13 +197,13 @@ class CashierController {
             let findInventory = await Inventory.
                 find({}).
                 populate('productID');
-            
+
             let cakeArr = [];
             let gasArr = [];
             let noGasArr = [];
 
             for (let i = 0; i < findInventory.length; i++) {
-                if (findInventory[i].productID.type == "cake"){
+                if (findInventory[i].productID.type == "cake") {
                     let item = {
                         id: findInventory[i].productID.id,
                         name: findInventory[i].productID.name,
@@ -210,7 +211,7 @@ class CashierController {
                     }
                     cakeArr.push(item);
                 }
-                if (findInventory[i].productID.type == "gas"){
+                if (findInventory[i].productID.type == "gas") {
                     let item = {
                         id: findInventory[i].productID.id,
                         name: findInventory[i].productID.name,
@@ -218,7 +219,7 @@ class CashierController {
                     }
                     gasArr.push(item);
                 }
-                if (findInventory[i].productID.type == "noGas"){
+                if (findInventory[i].productID.type == "noGas") {
                     let item = {
                         id: findInventory[i].productID.id,
                         name: findInventory[i].productID.name,
@@ -246,26 +247,26 @@ class CashierController {
             let today = new Date();
             let timeExport = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-            let findProduct = await Product.find({id: id});
-            
+            let findProduct = await Product.find({ id: id });
+
             let ObjectId = findProduct[0]._id;
 
-            let findInventory = await Inventory.find({productID: ObjectId});
+            let findInventory = await Inventory.find({ productID: ObjectId });
 
-            if (findInventory[0].quantity >= quantity){
+            if (findInventory[0].quantity >= quantity) {
                 let newQuantity = findProduct[0].total + quantity;
                 findProduct[0].total = newQuantity;
                 await findProduct[0].save();
-    
+
                 findInventory[0].quantity = findInventory[0].quantity - quantity;
-                if (findInventory[0].quantity == 0){
-                    await Inventory.deleteOne({productID: ObjectId});
+                if (findInventory[0].quantity == 0) {
+                    await Inventory.deleteOne({ productID: ObjectId });
                 } else {
                     await findInventory[0].save();
                 }
 
-                let findOnSell = await OnSell.find({product: ObjectId});
-                if (findOnSell.length != 0){
+                let findOnSell = await OnSell.find({ product: ObjectId });
+                if (findOnSell.length != 0) {
                     findOnSell[0].quantity = newQuantity;
                     await findOnSell[0].save();
                 } else {
@@ -304,9 +305,9 @@ class CashierController {
     exportHistory = async (req, res, next) => {
         try {
             let date = req.body.date;
-            
+
             let findExport = await ExportGoods.
-                find({time: date}).
+                find({ time: date }).
                 populate('productID');
 
             let exportArr = [];
@@ -332,21 +333,46 @@ class CashierController {
 
     createBill = async (req, res, next) => {
         try {
+            const {_id} = req.user;
+
+            let findBill = await Bill.find({});
+            let newID = 0;
+            let resultNewID = '';
+
+            let today = new Date();
+            let buyTime = today.getHours() + ':' + today.getMinutes() + ' ' +
+                today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            
+            if (findBill.length == 0) {
+                resultNewID = 'FF0000000';
+            } else {
+                let curID = findBill[findBill.length - 1].id;
+
+                curID = curID.slice(2);
+                newID = 1 + parseInt(curID[0]) * 1000000 + parseInt(curID[1]) * 100000 + parseInt(curID[2]) * 10000
+                    + parseInt(curID[3]) * 1000 + parseInt(curID[4]) * 100 + parseInt(curID[5]) * 10 + parseInt(curID[6]);
+
+                resultNewID = newID + '';
+                while (resultNewID.length < 7) {
+                    resultNewID = '0' + resultNewID;
+                }
+                resultNewID = 'HD' + resultNewID;
+            }
 
             let listProducts = req.body.product;
 
-            for (let i = 0; i < listProducts.length; i++){
+            for (let i = 0; i < listProducts.length; i++) {
                 let id = listProducts[i].id;
                 let number = listProducts[i].number;
-               
+
                 let findO = await OnSell.
                     find({}).
                     populate('product');
-            
-                for (let j = 0; j < findO.length; j++){
-                    if (findO[j].product.id == id){
 
-                        if (number > findO[j].quantity){
+                for (let j = 0; j < findO.length; j++) {
+                    if (findO[j].product.id == id) {
+
+                        if (number > findO[j].quantity) {
                             res.json({
                                 message: "fail"
                             });
@@ -356,28 +382,51 @@ class CashierController {
                 }
             }
 
-            for (let i = 0; i < listProducts.length; i++){
+            let productIDArr = [];
+            let positionIDArr = [];
+            let statusCompleteArr = [];
+            let quantityArr = [];
+
+            for (let i = 0; i < listProducts.length; i++) {
                 let id = listProducts[i].id;
                 let number = listProducts[i].number;
-               
+
                 let findO = await OnSell.
                     find({}).
                     populate('product');
-            
-                for (let j = 0; j < findO.length; j++){
-                    if (findO[j].product.id == id){
+
+                for (let j = 0; j < findO.length; j++) {
+                    if (findO[j].product.id == id) {
+
+                        productIDArr.push(findO[j].product._id);
+                        quantityArr.push(number);
+                        statusCompleteArr.push("done");
 
                         findO[j].quantity = findO[j].quantity - number;
                         await findO[j].save();
 
                         if (findO[j].product.type == "cake" || findO[j].product.type == "gas"
-                            || findO[j].product.type == "noGas"){
-                                await Product.findOneAndUpdate({id: id}, {total: findO[j].quantity});
+                            || findO[j].product.type == "noGas") {
+                            await Product.findOneAndUpdate({ id: id }, { total: findO[j].quantity });
                         }
 
                     }
                 }
             }
+
+            let itemBill = {
+                idBill: resultNewID,
+                idUser: _id,
+                idProducts: productIDArr,
+                idPositions: positionIDArr,
+                statusProducts: statusCompleteArr,
+                quantity: quantityArr,
+                typeBill: "offline",
+                paymentStatus: "done",
+                time: buyTime
+            }
+            let newBill = new Bill(itemBill);
+            await newBill.save();
 
             res.json({
                 message: "succesfull"
