@@ -1,7 +1,6 @@
 const { status, expire } = require('../Constant');
 const { userRepository, roleRepository, moneycodeRepository, billRepository } = require('./../Database');
 const billService = require('./../Public/billService');
-const { util } = require('util');
 
 const {
     genarateSalt,
@@ -139,7 +138,7 @@ const userService = {
                         position: billUncomplete.idPositions[k].idPos,
                         colorPos: billUncomplete.idPositions[k].color,
                         statusProduct: billUncomplete.statusProducts[k],
-                        quantity: billUncomplete.quantity[k]
+                        quantity: billUncomplete.quantity[k],
                     };
                     data.push(temp);
                 }

@@ -18,8 +18,6 @@ module.exports = async function(app) {
         credentials: true
     }));
     
-    //app.use(morgan("common"));
-    
     // connect to mongodb
     await mongoConnection();
 
@@ -30,7 +28,7 @@ module.exports = async function(app) {
     router(app);
     
     //handle loi
-   // app.use(errorHandlingMDW.handleErrorResquest)
+    app.use(errorHandlingMDW.handleErrorResquest)
 
     
 }

@@ -15,8 +15,9 @@ route.post('/setEmptyPosition', authorizationMDW.checkPermission, PositionContro
 route.post('/getPositionTableColor', PositionController.getPositionTableColor);
 
 //GET api/v1/position/getListBillUncompelte
-//route.get
+route.get('/getListBillUncompelte', PositionController.getListBillUncomplete);
 
-//POST api/v1/position/set
+//POST api/v1/position/setStatusProduct
+route.post('/setStatusProduct', PositionController.setStatusProduct)
 
 module.exports = route

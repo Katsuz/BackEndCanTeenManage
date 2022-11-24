@@ -1,6 +1,10 @@
 const { Product } = require('./../Database/Model');
 const { OnSell } = require('./../Database/Model');
 const { Position } = require('./../Database/Model');
+const {status} = require('./../Constant');
+const {positionService} = require('./../Service');
+const billservice = require('../Public/billService');
+
 
 class PositionController {
     createPositionCode = async (req, res, next) => {
@@ -69,6 +73,36 @@ class PositionController {
             
             res.json({
                 colors: temp
+            })
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    getListBillUncomplete = async(req,res,next) => {
+        try {
+            const listBill = await positionService.getListBillUncomplete();
+            
+            res.status(status.OK).json({
+                message:"get list success",
+                data: listBill
+            })
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    setStatusProduct = async(req,res,next) => {
+        try {
+            const {idBill} = req.body;
+            const {idProduct} = req.body;
+
+            await billservice.setDoneStatusProductInBillByID(idBill,idProduct);
+            
+            res.status(status.OK).json({
+                message:"set status product success"
             })
 
         } catch (error) {
