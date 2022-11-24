@@ -5,11 +5,25 @@ const billRepository = {
     getBillByIdBill: async(IdBill) =>{
         try{
             const billResult = Bill.findOne({_id: IdBill}).populate([
-                {path:'idUser', select:'username'},
+                {path:'idUser', select:'IdUser'},
                 {path:'idProducts', select:'id name'},
                 {path:'idPositions', select:'idPos color'}
             ]);
             //console.log(billResult);
+            return billResult;
+        } catch(err) {  
+            throw err;
+        }
+    },
+
+    getBillByIdUserAndDate: async(IDUser,date) =>{
+        try{
+            const beginDate = "00:00 " + date;
+            const finishDate = "23:59 " +date;
+            const billResult = Bill.find({$and: [{idUser: IDUser}, {time: {$gte: beginDate, $lt: finishDate}}]}).populate([
+                {path:'idUser', select:'IdUser username'},
+                {path:'idProducts', select:'id name price'},
+            ]);
             return billResult;
         } catch(err) {  
             throw err;

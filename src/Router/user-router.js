@@ -25,6 +25,9 @@ route.post('/confirmBill',authorizationMDW.checkUser, userController.confirmBill
 //POST api/v1/user/uncompleteBill
 route.get('/uncompleteBill',authorizationMDW.checkUser, userController.getUncompleteBill);
 
+//POST api/v1/user/getHistoryBill
+route.post('/getHistoryBill',authorizationMDW.checkUser, userController.getHistoryBill);
+
 //POST api/v1/user/logout
 route.post('/logout',authorizationMDW.checkUser,userController.logout);
 

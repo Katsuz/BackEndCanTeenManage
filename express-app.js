@@ -30,7 +30,7 @@ module.exports = async function(app) {
     router(app);
     
     //handle loi
-    app.use(errorHandlingMDW.handleErrorResquest)
+   // app.use(errorHandlingMDW.handleErrorResquest)
 
     
 }

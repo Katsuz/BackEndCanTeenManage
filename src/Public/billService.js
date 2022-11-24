@@ -87,16 +87,27 @@ module.exports.isCompletedBill = function (bill) {
     return true;
 }
 
+function isCompletedBillNoExport(bill) {
+
+    const statusProductArr = bill.statusProducts;
+    for (let i = 0; i < statusProductArr.length; i++){
+        if (statusProductArr[i] == "doing"){
+            return false;
+        }
+    }
+
+    return true;
+}
+
 module.exports.getOneUncompletedBillByUser_ID = async function (_id){
     
     const findBills = await Bill.find({idUser: _id});
     let idBillArr = [];
     for (let i = 0; i < findBills.length; i++){
-        if (!isCompletedBill(findBills[i])){
+        if (!isCompletedBillNoExport(findBills[i])){
             idBillArr.push(findBills[i]._id);
         }
     }
-
     return idBillArr;
 }
 
@@ -105,7 +116,7 @@ module.exports.getAllUncompletedBillByUser_ID = async function (){
     const findBills = await Bill.find();
     let idBillArr = [];
     for (let i = 0; i < findBills.length; i++){
-        if (!isCompletedBill(findBills[i])){
+        if (!isCompletedBillNoExport(findBills[i])){
             idBillArr.push(findBills[i]._id);
         }
     }
@@ -140,7 +151,6 @@ module.exports.getBillTotalCost = async function (idBill){
 
 
         totalCost += findProduct.price * num;
-
 
     }
 
