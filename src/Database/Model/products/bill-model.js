@@ -4,19 +4,23 @@ const Schema = mongoose.Schema;
 
 const Bill = new Schema({
     idBill: String,
-    idUser: String,
-    idGood: [{
+    idUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    },
+    idProducts: [{
         type: Schema.Types.ObjectId,
         ref: 'Product',
     }],
-    idPosition: [{
+    idPositions: [{
         type: Schema.Types.ObjectId,
         ref: 'Position',
     }],
-    statusComplete: [String],
+    statusProducts: [String],
     quantity: [Number],
     typeBill: String,
-    time: Date
+    paymentStatus: String,
+    time: String
 });
 
 module.exports = mongoose.model('Bill', Bill);

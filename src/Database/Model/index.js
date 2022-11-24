@@ -8,6 +8,7 @@ module.exports = {
     OnSell: require('./products/onSell-model'),
     Product: require('./products/product-model'),
     Position: require('./position/position-model'),
-    Moneycode: require('./moneycode/moneycode-model')
+    Moneycode: require('./moneycode/moneycode-model'),
+    Bill: require('./products/bill-model')
 }
 

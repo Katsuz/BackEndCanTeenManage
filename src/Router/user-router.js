@@ -19,6 +19,12 @@ route.post('/changePassword', authorizationMDW.checkUser, userController.updateP
 // -> tao ma vi tri (check colection position) -> true false
 //-> them mot cai hoa don
 
+//POST api/v1/user/createOnlineBill
+route.post('/createOnlineBill',authorizationMDW.checkUser, userController.createBill);
+
+//POST api/v1/user/confirmBill
+route.post('/confirmBill',authorizationMDW.checkUser, userController.confirmBill);
+
 route.post('/logout',authorizationMDW.checkUser,userController.logout);
 
 module.exports = route;
