@@ -18,6 +18,9 @@ route.post('/importHistory', CashierController.importHistory);
 //POST api/v1/cashier/inventory
 route.post('/inventory', CashierController.currentInventory);
 
+//POST api/v1/cashier/removeGood
+route.post('/removeGood',CashierController.removeGood);
+
 //POST api/v1/cashier/exportGoods
 route.post('/exportGoods', authorizationMDW.checkPermission, CashierController.exportGoods);
 

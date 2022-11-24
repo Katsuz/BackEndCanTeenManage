@@ -332,6 +332,44 @@ class CashierController {
         }
     }
 
+    removeGood = async (req, res, next) => {
+        try {
+            let id = req.body.id;
+            let quantity = req.body.quantity;
+
+            let findProduct = await Product.find({ id: id });
+
+            let ObjectId = findProduct[0]._id;
+
+            let findInventory = await Inventory.find({ productID: ObjectId });
+
+            if (findInventory[0].quantity >= quantity) {
+                let newQuantity = findProduct[0].total + quantity;
+                findProduct[0].total = newQuantity;
+                await findProduct[0].save();
+
+                findInventory[0].quantity = findInventory[0].quantity - quantity;
+                if (findInventory[0].quantity == 0) {
+                    await Inventory.deleteOne({ productID: ObjectId });
+                } else {
+                    await findInventory[0].save();
+                }
+
+                res.json({
+                    message: "successfully"
+                })
+
+            } else {
+                res.json({
+                    message: "invalid quantity remove"
+                })
+            }
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
     createBill = async (req, res, next) => {
         try {
             const {_id} = req.user;
