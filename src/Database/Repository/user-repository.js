@@ -95,7 +95,20 @@ const userRepository = {
         } catch(err){   
             throw err;
         }
+    },
+
+    UpdatePasswordUserByEmail: async(email,passwordHashed) => {
+        try{
+            await User.updateOne({email: email},{
+                $set:{
+                    password: passwordHashed
+                }
+            })
+        } catch(err){   
+            throw err;
+        }
     }
+    
     
 }
 

@@ -54,9 +54,23 @@ class AuthController {
             next(error);
         }
     }
-    //[PUT] /api/v1/auth/forgot-password
 
-    //[POST] /api/v1/auth/forgot-password
+    //[POST] /api/v1/auth/fogotPassword
+    forgotPassword = async(req,res,next) => {
+        try {
+            const {email} = req.body;
+            
+            await authService.sendNewPasswordIntoEmail(email);
+            res.status(status.OK).json({
+                message: "New password be sent in your email",
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    
 }
 
 module.exports = AuthController;
