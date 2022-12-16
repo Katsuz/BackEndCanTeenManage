@@ -66,9 +66,9 @@ const authorizationMDW = {
                         symbol = '&';
                     })
                 }
-                console.log(req.originalUrl);
-                console.log(url);
-                return req.originalUrl === url;
+                // console.log(req.originalUrl);
+                // console.log(url);
+                return req.originalUrl.includes(url);
 
             })) {
                 return res.status(status.UN_AUTHORIZED).json({
