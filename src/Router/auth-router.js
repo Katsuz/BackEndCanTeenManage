@@ -7,7 +7,7 @@ route.post('/register', authController.register);
 
 route.post('/login', authController.login);
 
-route.post('/fogotPassword', authController.forgotPassword);
+route.post('/forgotPassword', authController.forgotPassword);
 
 route.get('/', authController.CurrentProduct);
 
