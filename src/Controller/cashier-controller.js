@@ -14,6 +14,13 @@ class CashierController {
             let listProducts = req.body.products;
             let daySell = parseInt(req.body.day);
 
+            if (listProducts.length == 0){
+                await Product.updateMany({ daysell: daySell }, { daysell: -1 });
+                return res.json({
+                    message: "success"
+                })
+            }
+
             //delete Product won't sell
             let findOldProduct = await Product.find({ daysell: daySell });
             for (let i = 0; i < findOldProduct.length; i++) {
