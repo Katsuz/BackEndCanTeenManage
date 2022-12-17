@@ -703,6 +703,43 @@ class CashierController {
             next(error);
         }
     }
+
+    getBillByID = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({id: req.body.id})
+            if (findBill.length == 0){
+                return res.json({
+                    message: "bill doesn't exist"
+                });
+            }
+            let billReturn = await billservice.getBillInfo(findBill[0].idBill)
+            res.json({
+                message: "successful",
+                data: billReturn
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getBillByDate = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({date: req.body.date});
+            let billArr = [];
+            for (let i = 0; i < findBill.length; i++) {
+                billArr.push(await billservice.getBillInfo(findBill[i].idBill));
+            }
+
+            res.json({
+                message: "succesfull",
+                data: billArr
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new CashierController
