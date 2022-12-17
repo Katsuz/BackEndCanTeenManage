@@ -11,7 +11,7 @@ const billservice = require('../Public/billService');
 class CashierController {
     insertFood = async (req, res, next) => {
         try {
-            let listProducts = req.body.product;
+            let listProducts = req.body.products;
             let daySell = parseInt(req.body.day);
 
             //delete Product won't sell
