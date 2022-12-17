@@ -44,6 +44,9 @@ route.post('/getRevenueInPeriodTime', CashierController.getRevenueInPeriodTime);
 
 //POST api/v1/cashier/createPosition
 route.post('/createPosition', PositionController.createPositionCode);
+
+//POST api/v1/cashier/createPosition
+route.get('/allProduct', CashierController.getAllProduct);
 //POST api/v1/cashier/createCode
 //route.post('/createCode',  , CashierController.createCode );
 

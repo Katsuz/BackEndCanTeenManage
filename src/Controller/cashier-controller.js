@@ -604,6 +604,48 @@ class CashierController {
             next(error);
         }
     }
+    getAllProduct = async(req,res,next) => {
+        try {
+
+            let findProduct = await Product.find({});
+            let arrProduct = []
+            for (let i = 1; i <= 6; i++){
+                let rice = []
+                let noodles = []
+                let cake = []
+                let gas = []
+                let noGas = []
+                for (let j = 0; j < findProduct.length; j++){
+                    if (findProduct[j].daysell == i){
+                        if (findProduct[j].type == "rice"){
+                            rice.push(findProduct[j])
+                        }
+                        if (findProduct[j].type == "noodles"){
+                            noodles.push(findProduct[j])
+                        }
+                    }
+                }
+                let newObj = {
+                    day: i,
+                    products: {
+                        rice: rice,
+                        noodles: noodles,
+                        cake: [],
+                        gas: [],
+                        noGas: []
+                    }
+                }
+                arrProduct.push(newObj);
+            }
+            
+            res.json({
+                data: arrProduct
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new CashierController
