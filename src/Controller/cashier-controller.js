@@ -14,7 +14,7 @@ class CashierController {
             let listProducts = req.body.products;
             let daySell = parseInt(req.body.day);
 
-            if (listProducts.length == 0){
+            if (listProducts.length == 0) {
                 await Product.updateMany({ daysell: daySell }, { daysell: -1 });
                 return res.json({
                     message: "success"
@@ -174,25 +174,26 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === undefined){
-                let findExport = await ImportGoods.
-                find({}).
-                populate('productID');
-
-                let exportArr = [];
-                for (let i = 0; i < findExport.length; i++) {
+            if (date === undefined) {
+                let findImport = await ImportGoods.
+                    find({}).
+                    populate('productID');
+                let importArr = [];
+                for (let i = 0; i < findImport.length; i++) {
                     let item = {
-                        id: findExport[i].productID.id,
-                        name: findExport[i].productID.name,
-                        type: findExport[i].productID.type,
-                        quantity: findExport[i].quantity,
-                        time: findExport[i].time
+                        id: findImport[i].productID.id,
+                        name: findImport[i].productID.name,
+                        type: findImport[i].productID.type,
+                        quantity: findImport[i].quantity,
+                        totalCost: findImport[i].totalCost,
+                        source: findImport[i].source,
+                        date: findImport[i].date
                     }
-                    exportArr.push(item);
+                    importArr.push(item);
                 }
 
-                return res.json({
-                    products: exportArr
+                res.json({
+                    products: importArr
                 });
             }
 
@@ -274,7 +275,7 @@ class CashierController {
         try {
             let id = req.body.id;
             let quantity = req.body.quantity;
-            if (quantity == 0){
+            if (quantity == 0) {
                 return res.json({
                     message: "success"
                 })
@@ -341,10 +342,10 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === undefined){
+            if (date === undefined) {
                 let findExport = await ExportGoods.
-                find({}).
-                populate('productID');
+                    find({}).
+                    populate('productID');
 
                 let exportArr = [];
                 for (let i = 0; i < findExport.length; i++) {
@@ -362,7 +363,7 @@ class CashierController {
                     products: exportArr
                 });
             }
-            
+
             let findExport = await ExportGoods.
                 find({ time: date }).
                 populate('productID');
@@ -428,7 +429,7 @@ class CashierController {
 
     createBill = async (req, res, next) => {
         try {
-            const {_id} = req.user;
+            const { _id } = req.user;
 
             let findBill = await Bill.find({});
             let newID = 0;
@@ -437,7 +438,7 @@ class CashierController {
             let today = new Date();
             let buyTime = today.getHours() + ':' + today.getMinutes() + ' ' +
                 today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-            
+
             if (findBill.length == 0) {
                 resultNewID = 'FF0000000';
             } else {
@@ -537,8 +538,8 @@ class CashierController {
 
             let findBill = await Bill.find({});
             let UnCompletedBillArr = [];
-            for (let i = 0; i < findBill.length; i++){
-                if (!billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online"){
+            for (let i = 0; i < findBill.length; i++) {
+                if (!billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online") {
                     UnCompletedBillArr.push(await billservice.getBillInfo(findBill[i].idBill));
                 }
             }
@@ -557,8 +558,8 @@ class CashierController {
         try {
             let findBill = await Bill.find({});
             let completedBillArr = [];
-            for (let i = 0; i < findBill.length; i++){
-                if (billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online"){
+            for (let i = 0; i < findBill.length; i++) {
+                if (billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online") {
                     completedBillArr.push(await billservice.getBillInfo(findBill[i].idBill));
                 }
             }
@@ -579,8 +580,8 @@ class CashierController {
             let revenue = 0;
             let today = new Date();
             today = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-            for (let i = 0; i < findBill.length; i++){
-                if (findBill[i].time.includes(today)){
+            for (let i = 0; i < findBill.length; i++) {
+                if (findBill[i].time.includes(today)) {
                     let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
                     revenue += totalCost;
                 }
@@ -602,18 +603,18 @@ class CashierController {
             let revenue = 0;
             let today = new Date();
 
-            let start = new Date (today.getFullYear() + '-' + (today.getMonth() + 1));
+            let start = new Date(today.getFullYear() + '-' + (today.getMonth() + 1));
             start = start.getTime();
-            let end = new Date (today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+            let end = new Date(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
             end = end.getTime();
 
-            for (let i = 0; i < findBill.length; i++){
+            for (let i = 0; i < findBill.length; i++) {
                 let timeBill = findBill[i].time;
                 timeBill = timeBill.slice(6);
-                let time = new Date (timeBill);
+                let time = new Date(timeBill);
                 time = time.getTime();
 
-                if (start <= time && time <= end){
+                if (start <= time && time <= end) {
                     let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
                     revenue += totalCost;
                 }
@@ -634,18 +635,18 @@ class CashierController {
             let findBill = await Bill.find({});
             let revenue = 0;
 
-            let start = new Date (req.body.start);
+            let start = new Date(req.body.start);
             start = start.getTime();
-            let end = new Date (req.body.end);
+            let end = new Date(req.body.end);
             end = end.getTime();
 
-            for (let i = 0; i < findBill.length; i++){
+            for (let i = 0; i < findBill.length; i++) {
                 let timeBill = findBill[i].time;
                 timeBill = timeBill.slice(6);
-                let time = new Date (timeBill);
+                let time = new Date(timeBill);
                 time = time.getTime();
 
-                if (start <= time && time <= end){
+                if (start <= time && time <= end) {
                     let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
                     revenue += totalCost;
                 }
@@ -660,23 +661,23 @@ class CashierController {
             next(error);
         }
     }
-    getAllProduct = async(req,res,next) => {
+    getAllProduct = async (req, res, next) => {
         try {
 
             let findProduct = await Product.find({});
             let arrProduct = []
-            for (let i = 1; i <= 6; i++){
+            for (let i = 1; i <= 6; i++) {
                 let rice = []
                 let noodles = []
                 let cake = []
                 let gas = []
                 let noGas = []
-                for (let j = 0; j < findProduct.length; j++){
-                    if (findProduct[j].daysell == i){
-                        if (findProduct[j].type == "rice"){
+                for (let j = 0; j < findProduct.length; j++) {
+                    if (findProduct[j].daysell == i) {
+                        if (findProduct[j].type == "rice") {
                             rice.push(findProduct[j])
                         }
-                        if (findProduct[j].type == "noodles"){
+                        if (findProduct[j].type == "noodles") {
                             noodles.push(findProduct[j])
                         }
                     }
@@ -693,7 +694,7 @@ class CashierController {
                 }
                 arrProduct.push(newObj);
             }
-            
+
             res.json({
                 data: arrProduct
             });
