@@ -174,6 +174,28 @@ class CashierController {
         try {
             let date = req.body.date;
 
+            if (date === undefined){
+                let findExport = await ImportGoods.
+                find({}).
+                populate('productID');
+
+                let exportArr = [];
+                for (let i = 0; i < findExport.length; i++) {
+                    let item = {
+                        id: findExport[i].productID.id,
+                        name: findExport[i].productID.name,
+                        type: findExport[i].productID.type,
+                        quantity: findExport[i].quantity,
+                        time: findExport[i].time
+                    }
+                    exportArr.push(item);
+                }
+
+                return res.json({
+                    products: exportArr
+                });
+            }
+
             let findImport = await ImportGoods.
                 find({ date: date }).
                 populate('productID');
@@ -319,6 +341,28 @@ class CashierController {
         try {
             let date = req.body.date;
 
+            if (date === undefined){
+                let findExport = await ExportGoods.
+                find({}).
+                populate('productID');
+
+                let exportArr = [];
+                for (let i = 0; i < findExport.length; i++) {
+                    let item = {
+                        id: findExport[i].productID.id,
+                        name: findExport[i].productID.name,
+                        type: findExport[i].productID.type,
+                        quantity: findExport[i].quantity,
+                        time: findExport[i].time
+                    }
+                    exportArr.push(item);
+                }
+
+                return res.json({
+                    products: exportArr
+                });
+            }
+            
             let findExport = await ExportGoods.
                 find({ time: date }).
                 populate('productID');
