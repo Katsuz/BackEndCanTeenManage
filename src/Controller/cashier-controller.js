@@ -252,6 +252,11 @@ class CashierController {
         try {
             let id = req.body.id;
             let quantity = req.body.quantity;
+            if (quantity == 0){
+                return res.json({
+                    message: "success"
+                })
+            }
             let today = new Date();
             let timeExport = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
