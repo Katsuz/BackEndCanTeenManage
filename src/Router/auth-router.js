@@ -9,6 +9,7 @@ route.post('/login', authController.login);
 
 route.post('/forgotPassword', authController.forgotPassword);
 
+//get today product
 route.get('/', authController.CurrentProduct);
 
 module.exports = route;
