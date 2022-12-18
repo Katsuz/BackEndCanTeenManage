@@ -92,9 +92,8 @@ class UserController {
             let newID = 0;
             let resultNewID = '';
 
-            let today = new Date();
-            let buyTime = today.getHours() + ':' + today.getMinutes() + ' ' +
-                today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let buyTime = req.body.buyTime;
+               
 
             //create new bill id
             if (findBill.length == 0) {
