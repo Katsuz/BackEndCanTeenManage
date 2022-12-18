@@ -140,7 +140,7 @@ class UserController {
             //check enough empty position
             let findEmpty = await Position.find({ isEmpty: true });
             if (findEmpty.length < numPosNeed) {
-                res.json({
+                res.status(510).json({
                     message: "queue is not enought now"
                 });
                 return;
