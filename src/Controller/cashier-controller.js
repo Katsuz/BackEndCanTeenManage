@@ -666,6 +666,18 @@ class CashierController {
 
             let findProduct = await Product.find({});
             let arrProduct = []
+
+            arrProduct.push({
+                day: 0,
+                products: {
+                    rice: [],
+                    noodles: [],
+                    cake: [],
+                    gas: [],
+                    noGas: []
+                }
+            });
+
             for (let i = 1; i <= 6; i++) {
                 let rice = []
                 let noodles = []
@@ -694,17 +706,6 @@ class CashierController {
                 }
                 arrProduct.push(newObj);
             }
-
-            arrProduct.push({
-                day: 7,
-                products: {
-                    rice: [],
-                    noodles: [],
-                    cake: [],
-                    gas: [],
-                    noGas: []
-                }
-            });
 
             res.json({
                 data: arrProduct
