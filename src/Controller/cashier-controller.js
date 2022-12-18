@@ -5,6 +5,7 @@ const { Inventory } = require('./../Database/Model');
 const { ExportGoods } = require('./../Database/Model');
 const { Bill } = require('./../Database/Model');
 const billservice = require('../Public/billService');
+const Service = require('../Service');
 
 
 
@@ -718,17 +719,35 @@ class CashierController {
 
     getBillByID = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({id: req.body.id})
+            let findBill = await Bill.find({id: req.body.id});
+            let s = req.body.status;
+
             if (findBill.length == 0){
-                return res.json({
-                    message: "bill doesn't exist"
+                return res.status(200).json({
+                    message: "successful",
+                    data: []
                 });
             }
+
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
-            res.json({
-                message: "successful",
-                data: billReturn
-            });
+            if (s == "doing" && Service.isCompletedBill(findBill[0].idBill)){
+                res.status(200).json({
+                    message: "successful",
+                    data: [billReturn]
+                });
+            } else if (s == "done"  && !Service.isCompletedBill(findBill[0].idBill)){
+                res.status(200).json({
+                    message: "successful",
+                    data: [billReturn]
+                });
+            } else {
+                return res.status(500).json({
+                    message: "successful",
+                    data: []
+                });
+            }
+            
+            
 
         } catch (error) {
             next(error);
