@@ -175,7 +175,7 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === "undefined") {
+            if (date === "allDay") {
                 let findImport = await ImportGoods.
                     find({}).
                     populate('productID');
@@ -343,7 +343,7 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === "undefined") {
+            if (date === "allDay") {
                 let findExport = await ExportGoods.
                     find({}).
                     populate('productID');
