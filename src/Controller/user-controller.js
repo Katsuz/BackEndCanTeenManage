@@ -124,7 +124,7 @@ class UserController {
                     if (findO[j].product.id == id) {
                         numPosNeed++;
                         if (number > findO[j].quantity) {
-                            res.json({
+                            res.status(500).json({
                                 message: "do not enought product to buy"
                             });
                             return;
@@ -136,9 +136,10 @@ class UserController {
                     }
                 }
             }
-
+            
             //check enough empty position
             let findEmpty = await Position.find({ isEmpty: true });
+            
             if (findEmpty.length < numPosNeed) {
                 res.status(510).json({
                     message: "queue is not enought now"
