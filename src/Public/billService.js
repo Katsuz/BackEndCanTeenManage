@@ -72,7 +72,7 @@ module.exports.getBillInfo = async function (idBill){
         product: productArr,
         totalCost: totalCost,
         username: user.username,
-        idUser: user.idUser
+        idUser: user.IdUser
     }
 
     return itemBill;
