@@ -193,7 +193,7 @@ class CashierController {
                     importArr.push(item);
                 }
 
-                res.json({
+                return res.json({
                     products: importArr
                 });
             }
