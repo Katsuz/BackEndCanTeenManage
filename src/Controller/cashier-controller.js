@@ -730,12 +730,12 @@ class CashierController {
             }
 
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
-            if (s == "doing" && Service.isCompletedBill(findBill[0].idBill)){
+            if (s == "doing" && billservice.isCompletedBill(findBill[0])){
                 res.status(200).json({
                     message: "successful",
                     data: [billReturn]
                 });
-            } else if (s == "done"  && !Service.isCompletedBill(findBill[0].idBill)){
+            } else if (s == "done"  && !billservice.isCompletedBill(findBill[0])){
                 res.status(200).json({
                     message: "successful",
                     data: [billReturn]
