@@ -98,7 +98,7 @@ class UserController {
 
             //create new bill id
             if (findBill.length == 0) {
-                resultNewID = 'FF0000000';
+                resultNewID = 'HD0000000';
             } else {
                 let curID = findBill[findBill.length - 1].idBill;
 
@@ -206,7 +206,7 @@ class UserController {
                 data: billRes
             })
 
-            await sleep.sleep(12000);
+            await sleep.sleep(20000);
 
             let curBill = await Bill.find({ idBill: resultNewID });
 
