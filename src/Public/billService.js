@@ -65,8 +65,8 @@ module.exports.getBillInfo = async function (idBill){
     }
 
     let user = findBill.idUser;
-    console.log("aaaa ", findBill)
-    console.log(user)
+    // console.log("aaaa ", findBill)
+    // console.log(user)
 
     let itemBill = {
         idBill: idBill,

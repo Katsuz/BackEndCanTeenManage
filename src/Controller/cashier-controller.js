@@ -229,7 +229,7 @@ class CashierController {
             let findInventory = await Inventory.
                 find({}).
                 populate('productID');
-            
+
             let cakeArr = [];
             let gasArr = [];
             let noGasArr = [];
@@ -443,7 +443,7 @@ class CashierController {
             if (findBill.length == 0) {
                 resultNewID = 'HD0000000';
             } else {
-                let curID = findBill[findBill.length - 1].id;
+                let curID = findBill[findBill.length - 1].idBill;
 
                 curID = curID.slice(2);
                 newID = 1 + parseInt(curID[0]) * 1000000 + parseInt(curID[1]) * 100000 + parseInt(curID[2]) * 10000
@@ -719,10 +719,10 @@ class CashierController {
 
     getBillByID = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({id: req.body.id});
+            let findBill = await Bill.find({ id: req.body.id });
             let s = req.body.status;
 
-            if (findBill.length == 0){
+            if (findBill.length == 0) {
                 return res.status(200).json({
                     message: "successful",
                     data: []
@@ -730,12 +730,12 @@ class CashierController {
             }
 
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
-            if (s == "doing" && billservice.isCompletedBill(findBill[0])){
+            if (s == "doing" && billservice.isCompletedBill(findBill[0])) {
                 res.status(200).json({
                     message: "successful",
                     data: [billReturn]
                 });
-            } else if (s == "done"  && !billservice.isCompletedBill(findBill[0])){
+            } else if (s == "done" && !billservice.isCompletedBill(findBill[0])) {
                 res.status(200).json({
                     message: "successful",
                     data: [billReturn]
@@ -746,8 +746,8 @@ class CashierController {
                     data: []
                 });
             }
-            
-            
+
+
 
         } catch (error) {
             next(error);
@@ -756,7 +756,7 @@ class CashierController {
 
     getBillByDate = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({date: req.body.date});
+            let findBill = await Bill.find({ date: req.body.date });
             let billArr = [];
             for (let i = 0; i < findBill.length; i++) {
                 billArr.push(await billservice.getBillInfo(findBill[i].idBill));
