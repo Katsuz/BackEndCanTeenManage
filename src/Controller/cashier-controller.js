@@ -175,7 +175,7 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === undefined) {
+            if (date === "undefined") {
                 let findImport = await ImportGoods.
                     find({}).
                     populate('productID');
