@@ -299,7 +299,7 @@ class UserController {
     getHistoryBill = async (req, res, next) => {
         try {
             const { _id } = req.user;
-            let findBill = await Bill.find({date: req.body.date, _id: _id});
+            let findBill = await Bill.find({date: req.body.date, idUser: _id});
             let billArr = [];
             for (let i = 0; i < findBill.length; i++) {
                 billArr.push(await billservice.getBillInfo(findBill[i].idBill));
