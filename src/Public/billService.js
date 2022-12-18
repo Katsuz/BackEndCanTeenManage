@@ -59,16 +59,20 @@ module.exports.getBillInfo = async function (idBill){
                 number: findPosition.number,
                 status: findBill.statusProducts[i],
                 color: findPosition.color
-            }
+            },
         })
 
     }
+
+    let user = findBill.idUser;
 
     let itemBill = {
         idBill: idBill,
         time: findBill.time,
         product: productArr,
-        totalCost: totalCost
+        totalCost: totalCost,
+        username: user.username,
+        idUser: user.idUser
     }
 
     return itemBill;
