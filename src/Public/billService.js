@@ -33,7 +33,7 @@ module.exports.rollBack = async function (idBill){
 
 module.exports.getBillInfo = async function (idBill){
     let findBill = await Bill.findOne({idBill: idBill})
-                        //.populate('idProducts')
+                        .populate('idUser')
     
     let productArr = [];
     let totalCost = 0;
