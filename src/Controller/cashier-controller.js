@@ -695,6 +695,11 @@ class CashierController {
                 arrProduct.push(newObj);
             }
 
+            arrProduct.push({
+                day: 7,
+                products: {}
+            });
+
             res.json({
                 data: arrProduct
             });
