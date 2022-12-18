@@ -299,13 +299,51 @@ class UserController {
     getHistoryBill = async (req, res, next) => {
         try {
             const { _id } = req.user;
-            const {date} = req.body;
+            let findBill = await Bill.find({date: req.body.date, _id: _id});
+            let billArr = [];
+            for (let i = 0; i < findBill.length; i++) {
+                billArr.push(await billservice.getBillInfo(findBill[i].idBill));
+            }
 
-            const BillOfUser = await userService.getHistoryBillByDate(_id,date);
-            res.status(status.OK).json({
-                message: 'successfully',
-                BillOfUser
-            })
+            res.json({
+                message: "succesfull",
+                data: billArr
+            });
+        } catch (err) {
+            next(err);
+        }
+       
+    }
+
+    getTotalMoneySpentInMonth = async (req, res, next) => {
+        try {
+            const { _id } = req.user;
+
+            let findBill = await Bill.find({idUser: _id});
+            let money = 0;
+            let today = new Date();
+
+            let start = new Date(today.getFullYear() + '-' + (today.getMonth() + 1));
+            start = start.getTime();
+            let end = new Date(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+            end = end.getTime();
+
+            for (let i = 0; i < findBill.length; i++) {
+                let timeBill = findBill[i].time;
+                timeBill = timeBill.slice(6);
+                let time = new Date(timeBill);
+                time = time.getTime();
+
+                if (start <= time && time <= end) {
+                    let totalCost = await billservice.getBillTotalCost(findBill[i].idBill);
+                    money += totalCost;
+                }
+            }
+
+            res.json({
+                message: "succesfull",
+                money: money
+            });
         } catch (err) {
             next(err);
         }

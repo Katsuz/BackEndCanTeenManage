@@ -186,12 +186,16 @@ const userService = {
                 let username = billByDate[i].idUser.username;
                 let idUser = billByDate[i].idUser.IdUser;
                 let idBill = billByDate[i].idBill;
+                let positions = billByDate[i].idPositions;
+                let products = billByDate[i].idProducts;
                 let dataTemp = formatData({
                     time,
                     username,
                     idUser,
                     idBill,
-                    dataProduct: data
+                    dataProduct: data,
+                    positions,
+                    products
                 })
                 result.push(dataTemp);
             }

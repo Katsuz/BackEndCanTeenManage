@@ -28,6 +28,9 @@ route.post('/uncompleteBill', userController.getUncompleteBill);
 //POST api/v1/user/getHistoryBill
 route.post('/getHistoryBill', userController.getHistoryBill);
 
+//POST api/v1/user/getTotalMoneySpentInMonth
+route.post('/getTotalMoneySpentInMonth', userController.getTotalMoneySpentInMonth);
+
 //POST api/v1/user/logout
 route.post('/logout', userController.logout);
 
