@@ -343,7 +343,7 @@ class CashierController {
         try {
             let date = req.body.date;
 
-            if (date === undefined) {
+            if (date === "undefined") {
                 let findExport = await ExportGoods.
                     find({}).
                     populate('productID');
@@ -441,7 +441,7 @@ class CashierController {
                 today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
             if (findBill.length == 0) {
-                resultNewID = 'FF0000000';
+                resultNewID = 'HD0000000';
             } else {
                 let curID = findBill[findBill.length - 1].id;
 
