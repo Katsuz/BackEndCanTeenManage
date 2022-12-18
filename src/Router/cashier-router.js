@@ -45,6 +45,12 @@ route.post('/getRevenueInPeriodTime', CashierController.getRevenueInPeriodTime);
 //POST api/v1/cashier/createPosition
 route.post('/createPosition', PositionController.createPositionCode);
 
+//POST api/v1/cashier/getBillByID
+route.post('/getBillByID', CashierController.getBillByID);
+
+//POST api/v1/cashier/getBillByDate
+route.post('/getBillByDate', CashierController.getBillByDate);
+
 //POST api/v1/cashier/allProduct
 route.post('/allProduct', CashierController.getAllProduct);
 

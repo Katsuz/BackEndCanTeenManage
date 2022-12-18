@@ -92,13 +92,12 @@ class UserController {
             let newID = 0;
             let resultNewID = '';
 
-            let today = new Date();
-            let buyTime = today.getHours() + ':' + today.getMinutes() + ' ' +
-                today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let buyTime = req.body.buyTime;
+               
 
             //create new bill id
             if (findBill.length == 0) {
-                resultNewID = 'FF0000000';
+                resultNewID = 'HD0000000';
             } else {
                 let curID = findBill[findBill.length - 1].idBill;
 
@@ -206,7 +205,7 @@ class UserController {
                 data: billRes
             })
 
-            await sleep.sleep(12000);
+            await sleep.sleep(20000);
 
             let curBill = await Bill.find({ idBill: resultNewID });
 
@@ -232,7 +231,7 @@ class UserController {
 
             let findBill = await Bill.find({ idBill: idBill });
             if (findBill.length == 0) {
-                res.status(status.OK).json({
+                res.status(500).json({
                     message: 'Bill has been deleted (time out of bill waiting time)',
                 })
                 return;
@@ -256,11 +255,12 @@ class UserController {
             const totalCost = curBill.totalCost;
 
             let findUser = await User.findOne({ _id: _id });
+            //console.log(findUser)
             if (totalCost > findUser.property) {
 
                 await billservice.rollBack(idBill);
 
-                res.status(status.OK).json({
+                res.status(510).json({
                     message: 'Bill has been deleted (insufficient funds in the account)',
                 })
                 return;

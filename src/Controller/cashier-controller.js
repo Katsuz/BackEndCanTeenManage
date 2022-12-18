@@ -228,7 +228,7 @@ class CashierController {
             let findInventory = await Inventory.
                 find({}).
                 populate('productID');
-
+            
             let cakeArr = [];
             let gasArr = [];
             let noGasArr = [];
@@ -666,6 +666,18 @@ class CashierController {
 
             let findProduct = await Product.find({});
             let arrProduct = []
+
+            arrProduct.push({
+                day: 0,
+                products: {
+                    rice: [],
+                    noodles: [],
+                    cake: [],
+                    gas: [],
+                    noGas: []
+                }
+            });
+
             for (let i = 1; i <= 6; i++) {
                 let rice = []
                 let noodles = []
@@ -697,6 +709,43 @@ class CashierController {
 
             res.json({
                 data: arrProduct
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getBillByID = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({id: req.body.id})
+            if (findBill.length == 0){
+                return res.json({
+                    message: "bill doesn't exist"
+                });
+            }
+            let billReturn = await billservice.getBillInfo(findBill[0].idBill)
+            res.json({
+                message: "successful",
+                data: billReturn
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getBillByDate = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({date: req.body.date});
+            let billArr = [];
+            for (let i = 0; i < findBill.length; i++) {
+                billArr.push(await billservice.getBillInfo(findBill[i].idBill));
+            }
+
+            res.json({
+                message: "succesfull",
+                data: billArr
             });
 
         } catch (error) {

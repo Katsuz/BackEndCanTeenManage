@@ -23,7 +23,7 @@ route.post('/createOnlineBill', userController.createBill);
 route.post('/confirmBill', userController.confirmBill);
 
 //POST api/v1/user/uncompleteBill
-route.get('/uncompleteBill', userController.getUncompleteBill);
+route.post('/uncompleteBill', userController.getUncompleteBill);
 
 //POST api/v1/user/getHistoryBill
 route.post('/getHistoryBill', userController.getHistoryBill);
