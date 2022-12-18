@@ -16,7 +16,7 @@ class CanteenSchedule {
 
             let today = new Date();
             today = today.getDay();
-            //today = 6;
+            today = 6;
             //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
@@ -66,7 +66,7 @@ class CanteenSchedule {
 
             let today = new Date();
             today = today.getDay();
-            //today = 6;
+            today = 6;
             //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
