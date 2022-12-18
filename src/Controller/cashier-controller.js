@@ -741,7 +741,7 @@ class CashierController {
                     data: [billReturn]
                 });
             } else {
-                return res.status(500).json({
+                return res.status(200).json({
                     message: "successful",
                     data: []
                 });
