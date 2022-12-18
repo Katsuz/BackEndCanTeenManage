@@ -228,7 +228,7 @@ class CashierController {
             let findInventory = await Inventory.
                 find({}).
                 populate('productID');
-
+            
             let cakeArr = [];
             let gasArr = [];
             let noGasArr = [];
