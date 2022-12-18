@@ -23,6 +23,7 @@ const billRepository = {
             const billResult = Bill.find({$and: [{idUser: IDUser}, {time: {$gte: beginDate, $lt: finishDate}}]}).populate([
                 {path:'idUser', select:'IdUser username'},
                 {path:'idProducts', select:'id name price'},
+                {path:'idPositions', select:'idPos letter color number'},
             ]);
             return billResult;
         } catch(err) {  

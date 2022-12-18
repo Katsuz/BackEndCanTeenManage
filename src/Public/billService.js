@@ -33,7 +33,7 @@ module.exports.rollBack = async function (idBill){
 
 module.exports.getBillInfo = async function (idBill){
     let findBill = await Bill.findOne({idBill: idBill})
-                        //.populate('idProducts')
+                        .populate('idUser')
     
     let productArr = [];
     let totalCost = 0;
@@ -59,16 +59,20 @@ module.exports.getBillInfo = async function (idBill){
                 number: findPosition.number,
                 status: findBill.statusProducts[i],
                 color: findPosition.color
-            }
+            },
         })
 
     }
+
+    let user = findBill.idUser;
 
     let itemBill = {
         idBill: idBill,
         time: findBill.time,
         product: productArr,
-        totalCost: totalCost
+        totalCost: totalCost,
+        username: user.username,
+        idUser: user.IdUser
     }
 
     return itemBill;
