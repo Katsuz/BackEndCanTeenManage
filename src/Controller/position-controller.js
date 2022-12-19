@@ -96,10 +96,12 @@ class PositionController {
 
     setStatusProduct = async(req,res,next) => {
         try {
-            const {idBill} = req.body;
-            const {idProduct} = req.body;
-
-            await billservice.setDoneStatusProductInBillByID(idBill,idProduct);
+            const listBill = req.body.listBill;
+            for (let i = 0; i < listBill.length; i++){
+                for (let j = 0; j < listBill[i].products.length; j++){
+                    await billservice.setDoneStatusProductInBillByID(listBill[i].products[j].idBill,listBill[i].products[j].idProduct);
+                }
+            }
             
             res.status(status.OK).json({
                 message:"set status product success"
