@@ -20,9 +20,26 @@ module.exports.rollBack = async function (idBill){
         || findProduct.type == "noGas"){
             findProduct.total = findProduct.total + num;
             await findProduct.save();
+            if (findProduct.type == "cake"){
+                await Position.findOneAndUpdate({
+                    letter: findBill.letterPositions[i],
+                    number: findBill.numberPositions[i],
+                    color: findBill.colorPositions[i]
+                },
+                {
+                    isEmpty: true
+                });
+            }
         } else {
             //roll back empty position
-            let findPosition = await Position.findOneAndUpdate({_id: findBill.idPositions[i]}, {isEmpty: true});
+            let findPosition = await Position.findOneAndUpdate({
+                                letter: findBill.letterPositions[i],
+                                number: findBill.numberPositions[i],
+                                color: findBill.colorPositions[i]
+                            },
+                            {
+                                isEmpty: true
+                            });
         }
 
     }

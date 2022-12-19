@@ -720,7 +720,7 @@ class CashierController {
         try {
             let findBill = await Bill.find({ idBill: req.body.id });
             let s = req.body.status;
-            console.log("hehe", findBill)
+            //console.log("hehe", findBill)
             if (findBill.length == 0) {
                 return res.status(200).json({
                     message: "successful",
@@ -729,13 +729,21 @@ class CashierController {
             }
 
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
+            //console.log("hehe", billReturn)
+            //console.log("haha", billservice.isCompletedBill(findBill[0]))
+            // if (findBill[0].typeBill == "offline"){
+            //     return res.status(200).json({
+            //         message: "successful",
+            //         data: [billReturn]
+            //     });
+            // }
             if (s == "doing" && billservice.isCompletedBill(findBill[0])) {
-                res.status(200).json({
+                return res.status(200).json({
                     message: "successful",
                     data: [billReturn]
                 });
             } else if (s == "done" && !billservice.isCompletedBill(findBill[0])) {
-                res.status(200).json({
+                return res.status(200).json({
                     message: "successful",
                     data: [billReturn]
                 });
@@ -747,6 +755,32 @@ class CashierController {
             }
 
 
+
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    getHistoryBillByID = async (req, res, next) => {
+        try {
+            let findBill = await Bill.find({ idBill: req.body.id });
+            //console.log("hehe", findBill)
+            if (findBill.length == 0) {
+                return res.status(200).json({
+                    message: "successful",
+                    data: []
+                });
+            }
+
+            let billReturn = await billservice.getBillInfo(findBill[0].idBill)
+            // console.log("hehe", billReturn)
+            // console.log("haha", billservice.isCompletedBill(findBill[0]))
+            if (findBill[0].typeBill == "offline"){
+                return res.status(200).json({
+                    message: "successful",
+                    data: [billReturn]
+                });
+            }
 
         } catch (error) {
             next(error);

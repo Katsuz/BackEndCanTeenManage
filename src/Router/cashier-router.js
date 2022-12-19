@@ -48,6 +48,9 @@ route.post('/createPosition', PositionController.createPositionCode);
 //POST api/v1/cashier/getBillByID
 route.post('/getBillByID', CashierController.getBillByID);
 
+//POST api/v1/cashier/getHistoryBillByID
+route.post('/getHistoryBillByID', CashierController.getHistoryBillByID);
+
 //POST api/v1/cashier/getBillByDate
 route.post('/getBillByDate', CashierController.getBillByDate);
 
