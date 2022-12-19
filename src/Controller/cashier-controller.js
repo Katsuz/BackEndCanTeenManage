@@ -729,20 +729,12 @@ class CashierController {
             }
 
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
-            //console.log("hehe", billReturn)
-            //console.log("haha", billservice.isCompletedBill(findBill[0]))
-            // if (findBill[0].typeBill == "offline"){
-            //     return res.status(200).json({
-            //         message: "successful",
-            //         data: [billReturn]
-            //     });
-            // }
-            if (s == "doing" && billservice.isCompletedBill(findBill[0])) {
+            if (s == "doing" && !billservice.isCompletedBill(findBill[0])) {
                 return res.status(200).json({
                     message: "successful",
                     data: [billReturn]
                 });
-            } else if (s == "done" && !billservice.isCompletedBill(findBill[0])) {
+            } else if (s == "done" && billservice.isCompletedBill(findBill[0])) {
                 return res.status(200).json({
                     message: "successful",
                     data: [billReturn]
@@ -775,12 +767,10 @@ class CashierController {
             let billReturn = await billservice.getBillInfo(findBill[0].idBill)
             // console.log("hehe", billReturn)
             // console.log("haha", billservice.isCompletedBill(findBill[0]))
-            if (findBill[0].typeBill == "offline"){
-                return res.status(200).json({
-                    message: "successful",
-                    data: [billReturn]
-                });
-            }
+            return res.status(200).json({
+                message: "successful",
+                data: [billReturn]
+            });
 
         } catch (error) {
             next(error);
