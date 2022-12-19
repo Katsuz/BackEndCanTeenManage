@@ -603,10 +603,8 @@ class CashierController {
             let revenue = 0;
             let today = new Date();
 
-            let start = new Date(today.getFullYear() + '-' + (today.getMonth() + 1));
-            start = start.getTime();
-            let end = new Date(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
-            end = end.getTime();
+            let start = req.body.start;
+            let end = req.body.end;
 
             for (let i = 0; i < findBill.length; i++) {
                 let timeBill = findBill[i].time;
@@ -779,7 +777,7 @@ class CashierController {
 
     getBillByDate = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({ date: req.body.date });
+            let findBill = await Bill.find({ time: req.body.date });
             let billArr = [];
             for (let i = 0; i < findBill.length; i++) {
                 billArr.push(await billservice.getBillInfo(findBill[i].idBill));
