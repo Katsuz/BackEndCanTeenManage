@@ -6,8 +6,7 @@ const billRepository = {
         try{
             const billResult = Bill.findOne({_id: IdBill}).populate([
                 {path:'idUser', select:'IdUser'},
-                {path:'idProducts', select:'id name'},
-                {path:'idPositions', select:'idPos color'}
+                {path:'idProducts', select:'id name'}
             ]);
             //console.log(billResult);
             return billResult;

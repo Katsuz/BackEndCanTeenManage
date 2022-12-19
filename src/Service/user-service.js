@@ -132,15 +132,27 @@ const userService = {
                 let billUncomplete = await billRepository.getBillByIdBill(idUncompleteBill[i]);
                 let data = [];
                 for (let k = 0; k < billUncomplete.idProducts.length; k++) {
-                    let temp = {
-                        idProduct: billUncomplete.idProducts[k].id,
-                        nameProduct: billUncomplete.idProducts[k].name,
-                        position: billUncomplete.idPositions[k].idPos,
-                        colorPos: billUncomplete.idPositions[k].color,
-                        statusProduct: billUncomplete.statusProducts[k],
-                        quantity: billUncomplete.quantity[k],
-                    };
-                    data.push(temp);
+                    if (billUncomplete.idProducts[k].type == "noGas" || billUncomplete.idProducts[k].type == "gas"){
+                        let temp = {
+                            idProduct: billUncomplete.idProducts[k].id,
+                            nameProduct: billUncomplete.idProducts[k].name,
+                            position: "",
+                            colorPos: "",
+                            statusProduct: billUncomplete.statusProducts[k],
+                            quantity: billUncomplete.quantity[k],
+                        };
+                        data.push(temp);
+                    } else {
+                        let temp = {
+                            idProduct: billUncomplete.idProducts[k].id,
+                            nameProduct: billUncomplete.idProducts[k].name,
+                            position: billUncomplete.letterPositions[k] + billUncomplete.numberPositions[k],
+                            colorPos: billUncomplete.colorPositions[k],
+                            statusProduct: billUncomplete.statusProducts[k],
+                            quantity: billUncomplete.quantity[k],
+                        };
+                        data.push(temp);
+                    }
                 }
 
                 let idUser = billUncomplete.idUser.IdUser;
