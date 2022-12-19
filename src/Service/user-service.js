@@ -132,6 +132,7 @@ const userService = {
                 let billUncomplete = await billRepository.getBillByIdBill(idUncompleteBill[i]);
                 let data = [];
                 for (let k = 0; k < billUncomplete.idProducts.length; k++) {
+                    //console.log(billUncomplete.idProducts[k].type)
                     if (billUncomplete.idProducts[k].type == "noGas" || billUncomplete.idProducts[k].type == "gas"){
                         let temp = {
                             idProduct: billUncomplete.idProducts[k].id,
