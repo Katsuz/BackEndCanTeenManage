@@ -99,7 +99,7 @@ class PositionController {
             const listBill = req.body.listBill;
             for (let i = 0; i < listBill.length; i++){
                 for (let j = 0; j < listBill[i].products.length; j++){
-                    await billservice.setDoneStatusProductInBillByID(listBill[i].products[j].idBill,listBill[i].products[j].idProduct);
+                    await billservice.setDoneStatusProductInBillByID(listBill[i].idBill, listBill[i].products[j]);
                 }
             }
             
