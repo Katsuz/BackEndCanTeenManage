@@ -777,7 +777,8 @@ class CashierController {
 
     getBillByDate = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({ time: req.body.date });
+            let date = req.body.date;
+            let findBill = await Bill.find({ time: { "$regex": date, "$options": "i" } });
             let billArr = [];
             for (let i = 0; i < findBill.length; i++) {
                 billArr.push(await billservice.getBillInfo(findBill[i].idBill));
