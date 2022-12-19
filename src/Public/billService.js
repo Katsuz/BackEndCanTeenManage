@@ -20,9 +20,26 @@ module.exports.rollBack = async function (idBill){
         || findProduct.type == "noGas"){
             findProduct.total = findProduct.total + num;
             await findProduct.save();
+            if (findProduct.type == "cake"){
+                await Position.findOneAndUpdate({
+                    letter: findBill.letterPositions[i],
+                    number: findBill.numberPositions[i],
+                    color: findBill.colorPositions[i]
+                },
+                {
+                    isEmpty: true
+                });
+            }
         } else {
             //roll back empty position
-            let findPosition = await Position.findOneAndUpdate({_id: findBill.idPositions[i]}, {isEmpty: true});
+            let findPosition = await Position.findOneAndUpdate({
+                                letter: findBill.letterPositions[i],
+                                number: findBill.numberPositions[i],
+                                color: findBill.colorPositions[i]
+                            },
+                            {
+                                isEmpty: true
+                            });
         }
 
     }
@@ -37,34 +54,58 @@ module.exports.getBillInfo = async function (idBill){
     
     let productArr = [];
     let totalCost = 0;
-
+    //console.log("find bill",findBill);
     for (let i = 0; i < findBill.idProducts.length; i++){
         let num = findBill.quantity[i];
 
         let findProduct = await Product.findOne({_id: findBill.idProducts[i]});
 
-        let findPosition = await Position.findOne({_id: findBill.idPositions[i]._id});
+        //let findPosition = await Position.findOne({_id: findBill.idPositions[i]._id});
 
         totalCost += findProduct.price * num;
 
-        productArr.push({
-            id: findProduct.id,
-            name: findProduct.name,
-            type: findProduct.type,
-            quantity: num,
-            price: findProduct.price,
-            position: {
-                id: findPosition.idPos,
-                letter: findPosition.letter,
-                number: findPosition.number,
-                status: findBill.statusProducts[i],
-                color: findPosition.color
-            },
-        })
+        if (findBill.typeBill == "offline"){
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {},
+            })
+            continue;
+        }
 
+        if (findProduct.type == "noGas" || findProduct == "gas"){
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {},
+            })
+        } else {
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {
+                    id: findBill.letterPositions[i] + findBill.numberPositions[i],
+                    letter: findBill.letterPositions[i],
+                    number: findBill.numberPositions[i],
+                    status: findBill.statusProducts[i],
+                    color: findBill.colorPositions[i]
+                },
+            })
+        }
     }
 
     let user = findBill.idUser;
+    //console.log("aaaa ", findBill)
+    // console.log(user)
 
     let itemBill = {
         idBill: idBill,
@@ -74,7 +115,7 @@ module.exports.getBillInfo = async function (idBill){
         username: user.username,
         idUser: user.IdUser
     }
-
+    //console.log(itemBill)
     return itemBill;
     
 }

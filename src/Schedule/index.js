@@ -7,6 +7,8 @@ const dateOpen = [1, 2, 3, 4, 5, 6]; //monday-saturday
 var isReseted = false;
 const { Product } = require('../Database/Model');
 const { OnSell } = require('../Database/Model');
+let rule = new schedule.RecurrenceRule();
+rule.tz = 'Asia/Saigon';
 
 class CanteenSchedule {
 
@@ -16,7 +18,7 @@ class CanteenSchedule {
 
             let today = new Date();
             today = today.getDay();
-            today = 6;
+            //today = 6;
             //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
@@ -46,6 +48,7 @@ class CanteenSchedule {
                     let newOnSell = new OnSell(item);
                     let saveN = await newOnSell.save();
                 };
+                let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
             }
         });
         const end = schedule.scheduleJob({ hour: endHour, minute: endMinute, dayOfWeek: dateOpen }, async function () {
@@ -57,6 +60,7 @@ class CanteenSchedule {
                 findOnSell[i].quantity = 0;
                 await findOnSell[i].save();
             }
+            let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
         });
 
         if (isReseted == false) {
@@ -66,11 +70,11 @@ class CanteenSchedule {
 
             let today = new Date();
             today = today.getDay();
-            today = 6;
+            //today = 6;
             //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
-            //console.log(deleteO);
+            
 
             let findPFood = await Product.find({ daysell: today });
 

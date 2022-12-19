@@ -12,10 +12,9 @@ const Bill = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
     }],
-    idPositions: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Position',
-    }],
+    colorPositions: [String],
+    letterPositions: [String],
+    numberPositions: [Number],
     statusProducts: [String],
     quantity: [Number],
     typeBill: String,

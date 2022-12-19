@@ -124,7 +124,7 @@ class UserController {
                     if (findO[j].product.id == id) {
                         numPosNeed++;
                         if (number > findO[j].quantity) {
-                            res.json({
+                            res.status(500).json({
                                 message: "do not enought product to buy"
                             });
                             return;
@@ -136,18 +136,21 @@ class UserController {
                     }
                 }
             }
-
+            
             //check enough empty position
             let findEmpty = await Position.find({ isEmpty: true });
+            
             if (findEmpty.length < numPosNeed) {
-                res.json({
+                res.status(510).json({
                     message: "queue is not enought now"
                 });
                 return;
             }
 
             let productIDArr = [];
-            let positionIDArr = [];
+            let positionColorArr = [];
+            let positionNumberArr = [];
+            let positionLetterArr = [];
             let statusCompleteArr = [];
             let quantityArr = [];
 
@@ -166,14 +169,18 @@ class UserController {
                         await findO[j].save();
 
 
-                        if (findO[j].product.type == "cake" || findO[j].product.type == "gas"
+                        if (findO[j].product.type == "gas"
                             || findO[j].product.type == "noGas") {
                             await Product.findOneAndUpdate({ id: id }, { total: findO[j].quantity });
                             let emptyPosition = await Position.findOne({});
-                            positionIDArr.push(emptyPosition._id);
+                            positionNumberArr.push(emptyPosition.number);
+                            positionColorArr.push(emptyPosition.color);
+                            positionLetterArr.push(emptyPosition.letter);
                         } else {
-                            let emptyPosition = await Position.findOneAndUpdate({ isEmpty: true }, { isEmpty: false });
-                            positionIDArr.push(emptyPosition._id);
+                            let emptyPosition = await Position.findOneAndUpdate({ isEmpty: true }, { isEmpty: false });                           
+                            positionNumberArr.push(emptyPosition.number);
+                            positionColorArr.push(emptyPosition.color);
+                            positionLetterArr.push(emptyPosition.letter);
                         }
 
                         productIDArr.push(findO[j].product._id);
@@ -188,7 +195,9 @@ class UserController {
                 idBill: resultNewID,
                 idUser: _id,
                 idProducts: productIDArr,
-                idPositions: positionIDArr,
+                colorPositions: positionColorArr,
+                letterPositions: positionLetterArr,
+                numberPositions: positionNumberArr,
                 statusProducts: statusCompleteArr,
                 quantity: quantityArr,
                 typeBill: "online",
