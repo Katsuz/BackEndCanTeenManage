@@ -11,6 +11,9 @@ route.post('/getPositionTableColor', PositionController.getPositionTableColor);
 //GET api/v1/position/getListBillUncompelte
 route.post('/getListBillUncomplete', PositionController.getListBillUncomplete);
 
+//GET api/v1/position/getListBillUncompelte
+route.post('/getBillUncompleteByID', PositionController.getListBillUncompleteByID);
+
 //POST api/v1/position/setStatusProduct
 route.post('/setStatusProduct', PositionController.setStatusProduct);
 

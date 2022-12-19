@@ -156,6 +156,18 @@ module.exports.getOneUncompletedBillByUser_ID = async function (_id){
     return idBillArr;
 }
 
+module.exports.getOneUncompletedBillByIDBill = async function (id){
+    
+    const findBills = await Bill.find({idBill: id});
+    let idBillArr = [];
+    for (let i = 0; i < findBills.length; i++){
+        if (!isCompletedBillNoExport(findBills[i])){
+            idBillArr.push(findBills[i]._id);
+        }
+    }
+    return idBillArr;
+}
+
 module.exports.getAllUncompletedBillByUser_ID = async function (){
     
     const findBills = await Bill.find();
