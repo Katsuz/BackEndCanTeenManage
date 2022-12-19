@@ -48,6 +48,7 @@ class CanteenSchedule {
                     let newOnSell = new OnSell(item);
                     let saveN = await newOnSell.save();
                 };
+                let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
             }
         });
         const end = schedule.scheduleJob({ hour: endHour, minute: endMinute, dayOfWeek: dateOpen }, async function () {
@@ -59,6 +60,7 @@ class CanteenSchedule {
                 findOnSell[i].quantity = 0;
                 await findOnSell[i].save();
             }
+            let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
         });
 
         if (isReseted == false) {
