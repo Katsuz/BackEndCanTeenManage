@@ -9,7 +9,7 @@ route.post('/setEmptyPosition', PositionController.setEmptyPositionCode);
 route.post('/getPositionTableColor', PositionController.getPositionTableColor);
 
 //GET api/v1/position/getListBillUncompelte
-route.get('/getListBillUncomplete', PositionController.getListBillUncomplete);
+route.post('/getListBillUncomplete', PositionController.getListBillUncomplete);
 
 //POST api/v1/position/setStatusProduct
 route.post('/setStatusProduct', PositionController.setStatusProduct);
