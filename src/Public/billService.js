@@ -47,21 +47,43 @@ module.exports.getBillInfo = async function (idBill){
 
         totalCost += findProduct.price * num;
 
-        productArr.push({
-            id: findProduct.id,
-            name: findProduct.name,
-            type: findProduct.type,
-            quantity: num,
-            price: findProduct.price,
-            position: {
-                id: findBill.letterPositions[i] + findBill.numberPositions[i],
-                letter: findBill.letterPositions[i],
-                number: findBill.numberPositions[i],
-                status: findBill.statusProducts[i],
-                color: findBill.colorPositions[i]
-            },
-        })
+        if (findBill.typeBill == "offline"){
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {},
+            })
+            continue;
+        }
 
+        if (findProduct.type == "noGas" || findProduct == "gas"){
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {},
+            })
+        } else {
+            productArr.push({
+                id: findProduct.id,
+                name: findProduct.name,
+                type: findProduct.type,
+                quantity: num,
+                price: findProduct.price,
+                position: {
+                    id: findBill.letterPositions[i] + findBill.numberPositions[i],
+                    letter: findBill.letterPositions[i],
+                    number: findBill.numberPositions[i],
+                    status: findBill.statusProducts[i],
+                    color: findBill.colorPositions[i]
+                },
+            })
+        }
     }
 
     let user = findBill.idUser;

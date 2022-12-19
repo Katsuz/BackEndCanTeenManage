@@ -169,7 +169,7 @@ class UserController {
                         await findO[j].save();
 
 
-                        if (findO[j].product.type == "cake" || findO[j].product.type == "gas"
+                        if (findO[j].product.type == "gas"
                             || findO[j].product.type == "noGas") {
                             await Product.findOneAndUpdate({ id: id }, { total: findO[j].quantity });
                             let emptyPosition = await Position.findOne({});
