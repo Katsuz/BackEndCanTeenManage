@@ -567,7 +567,8 @@ class CashierController {
 
             res.json({
                 message: "succesfull",
-                data: completedBillArr
+                data: completedBillArr,
+                date: date
             });
 
         } catch (error) {
