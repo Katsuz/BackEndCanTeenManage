@@ -195,7 +195,6 @@ class UserController {
                 idBill: resultNewID,
                 idUser: _id,
                 idProducts: productIDArr,
-                idPositions: positionIDArr,
                 colorPositions: positionColorArr,
                 letterPositions: positionLetterArr,
                 numberPositions: positionNumberArr,
