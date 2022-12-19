@@ -74,7 +74,7 @@ class CanteenSchedule {
             //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
-            //console.log(deleteO);
+            
 
             let findPFood = await Product.find({ daysell: today });
 
