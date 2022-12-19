@@ -470,7 +470,7 @@ class CashierController {
                     if (findO[j].product.id == id) {
 
                         if (number > findO[j].quantity) {
-                            res.json({
+                            res.statusCode(500).json({
                                 message: "fail"
                             });
                             return;
@@ -480,7 +480,6 @@ class CashierController {
             }
 
             let productIDArr = [];
-            let positionIDArr = [];
             let statusCompleteArr = [];
             let quantityArr = [];
 
@@ -515,7 +514,9 @@ class CashierController {
                 idBill: resultNewID,
                 idUser: _id,
                 idProducts: productIDArr,
-                idPositions: positionIDArr,
+                colorPositions: [],
+                letterPositions: [],
+                numberPositions: [],
                 statusProducts: statusCompleteArr,
                 quantity: quantityArr,
                 typeBill: "offline",
@@ -719,9 +720,9 @@ class CashierController {
 
     getBillByID = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({ id: req.body.id });
+            let findBill = await Bill.find({ idBill: req.body.id });
             let s = req.body.status;
-
+            console.log("hehe", findBill)
             if (findBill.length == 0) {
                 return res.status(200).json({
                     message: "successful",

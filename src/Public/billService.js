@@ -37,13 +37,13 @@ module.exports.getBillInfo = async function (idBill){
     
     let productArr = [];
     let totalCost = 0;
-
+    //console.log("find bill",findBill);
     for (let i = 0; i < findBill.idProducts.length; i++){
         let num = findBill.quantity[i];
 
         let findProduct = await Product.findOne({_id: findBill.idProducts[i]});
 
-        let findPosition = await Position.findOne({_id: findBill.idPositions[i]._id});
+        //let findPosition = await Position.findOne({_id: findBill.idPositions[i]._id});
 
         totalCost += findProduct.price * num;
 
@@ -54,18 +54,18 @@ module.exports.getBillInfo = async function (idBill){
             quantity: num,
             price: findProduct.price,
             position: {
-                id: findPosition.idPos,
-                letter: findPosition.letter,
-                number: findPosition.number,
+                id: findBill.letterPositions[i] + findBill.numberPositions[i],
+                letter: findBill.letterPositions[i],
+                number: findBill.numberPositions[i],
                 status: findBill.statusProducts[i],
-                color: findPosition.color
+                color: findBill.colorPositions[i]
             },
         })
 
     }
 
     let user = findBill.idUser;
-    // console.log("aaaa ", findBill)
+    //console.log("aaaa ", findBill)
     // console.log(user)
 
     let itemBill = {
@@ -76,7 +76,7 @@ module.exports.getBillInfo = async function (idBill){
         username: user.username,
         idUser: user.IdUser
     }
-
+    //console.log(itemBill)
     return itemBill;
     
 }

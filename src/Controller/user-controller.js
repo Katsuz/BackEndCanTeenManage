@@ -148,7 +148,9 @@ class UserController {
             }
 
             let productIDArr = [];
-            let positionIDArr = [];
+            let positionColorArr = [];
+            let positionNumberArr = [];
+            let positionLetterArr = [];
             let statusCompleteArr = [];
             let quantityArr = [];
 
@@ -171,10 +173,14 @@ class UserController {
                             || findO[j].product.type == "noGas") {
                             await Product.findOneAndUpdate({ id: id }, { total: findO[j].quantity });
                             let emptyPosition = await Position.findOne({});
-                            positionIDArr.push(emptyPosition._id);
+                            positionNumberArr.push(emptyPosition.number);
+                            positionColorArr.push(emptyPosition.color);
+                            positionLetterArr.push(emptyPosition.letter);
                         } else {
-                            let emptyPosition = await Position.findOneAndUpdate({ isEmpty: true }, { isEmpty: false });
-                            positionIDArr.push(emptyPosition._id);
+                            let emptyPosition = await Position.findOneAndUpdate({ isEmpty: true }, { isEmpty: false });                           
+                            positionNumberArr.push(emptyPosition.number);
+                            positionColorArr.push(emptyPosition.color);
+                            positionLetterArr.push(emptyPosition.letter);
                         }
 
                         productIDArr.push(findO[j].product._id);
@@ -190,6 +196,9 @@ class UserController {
                 idUser: _id,
                 idProducts: productIDArr,
                 idPositions: positionIDArr,
+                colorPositions: positionColorArr,
+                letterPositions: positionLetterArr,
+                numberPositions: positionNumberArr,
                 statusProducts: statusCompleteArr,
                 quantity: quantityArr,
                 typeBill: "online",
