@@ -56,7 +56,8 @@ route.post('/getBillByDate', CashierController.getBillByDate);
 
 //POST api/v1/cashier/allProduct
 route.post('/allProduct', CashierController.getAllProduct);
+
 //POST api/v1/cashier/createCode
-//route.post('/createCode',  , CashierController.createCode );
+//route.post('/createCode', CashierController.createCode );
 
 module.exports = route

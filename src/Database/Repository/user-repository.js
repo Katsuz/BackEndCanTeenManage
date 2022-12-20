@@ -14,7 +14,6 @@ const userRepository = {
             
             //save into database
             const result = await newUser.save();
-            console.log(result);
             return result;
         } catch (err) {
             throw err;
@@ -105,6 +104,18 @@ const userRepository = {
                 }
             })
         } catch(err){   
+            throw err;
+        }
+    },
+
+    UpdateImageUser: async(id, image) =>{
+        try{
+            await User.updateOne({_id: id},{
+                $set: {
+                    image: image
+                }
+            })
+        } catch(err) {
             throw err;
         }
     }
