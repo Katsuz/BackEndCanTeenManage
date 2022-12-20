@@ -10,12 +10,10 @@ const userRepository = {
                 password: password,
                 IdUser: IdUser,
                 roleID: role,
-                image: "https://haycafe.vn/wp-content/uploads/2022/08/hinh-anh-avatar-Luffy.jpg"
             })
             
             //save into database
             const result = await newUser.save();
-            console.log(result);
             return result;
         } catch (err) {
             throw err;

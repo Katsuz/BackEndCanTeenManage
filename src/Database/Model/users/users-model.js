@@ -29,7 +29,10 @@ const User = new Schema({
             ref: 'role',
     },
 
-    image: String,
+    image: {
+        type: String,
+        default: "https://haycafe.vn/wp-content/uploads/2022/08/hinh-anh-avatar-Luffy.jpg"
+    }
 });
 
 module.exports = model('user',User);
