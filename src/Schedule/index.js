@@ -10,21 +10,22 @@ const { OnSell } = require('../Database/Model');
 let ruleStart = new schedule.RecurrenceRule();
 ruleStart.tz = 'Asia/Saigon';
 ruleStart.second = 0;
-ruleStart.minute = 13;
+ruleStart.minute = 38;
 ruleStart.hour = 15;
 let ruleEnd = new schedule.RecurrenceRule();
 ruleEnd.tz = 'Asia/Saigon';
 ruleEnd.second = 0;
-ruleEnd.minute = 0;
-ruleEnd.hour = 18;
+ruleEnd.minute = 37;
+ruleEnd.hour = 15;
 
 class CanteenSchedule {
 
     async run() {
         const start = schedule.scheduleJob(ruleStart, async function () {
             console.log('Reset product of today!');
-
+            
             let today = new Date();
+            today = new Date(today.toLocaleString('en-US', { timeZone: 'Asia/Saigon' }))
             today = today.getDay();
             //today = 6;
             //console.log(today);
@@ -77,6 +78,7 @@ class CanteenSchedule {
             console.log('Reset product of today!');
 
             let today = new Date();
+            today = new Date(today.toLocaleString('en-US', { timeZone: 'Asia/Saigon' }))
             today = today.getDay();
             //today = 6;
             //console.log(today);
