@@ -363,11 +363,11 @@ class UserController {
         try{
             const { _id } = req.user;
             const image = req.body.image;
-            const { userUpdated } = await userService.updateImageUser(_id, image);
+            const { user } = await userService.updateImageUser(_id, image);
 
             res.status(status.OK).json({
                 message: 'update success',
-                data: userUpdated,
+                data: user,
             })
         } catch(err) {
             next(err);

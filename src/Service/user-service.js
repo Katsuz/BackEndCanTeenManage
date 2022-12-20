@@ -233,7 +233,7 @@ const userService = {
             user = await userRepository.UpdateImageUser(id, image);
 
             return formatData({
-                userUpdated
+                user
             })
 
         } catch (err) {
