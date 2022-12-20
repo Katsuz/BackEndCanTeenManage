@@ -15,7 +15,7 @@ ruleStart.hour = 15;
 let ruleEnd = new schedule.RecurrenceRule();
 ruleEnd.tz = 'Asia/Saigon';
 ruleEnd.second = 0;
-ruleEnd.minute = 41;
+ruleEnd.minute = 45;
 ruleEnd.hour = 15;
 
 class CanteenSchedule {
