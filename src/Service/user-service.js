@@ -223,7 +223,7 @@ const userService = {
 
     updateImageUser: async(id, image) => {
         try {
-            const user = await userRepository.FindUserById(id);
+            let user = await userRepository.FindUserById(id);
             if (!user) {
                 throw new Error('user does not exist', {
                     cause: status.NOT_FOUND
