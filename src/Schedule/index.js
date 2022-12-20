@@ -1,7 +1,7 @@
 const schedule = require('node-schedule');
 const startHour = 6;
 const startMinute = 0;
-const endHour = 18;
+const endHour = 15;
 const endMinute = 0;
 const dateOpen = [1, 2, 3, 4, 5, 6]; //monday-saturday
 var isReseted = false;
