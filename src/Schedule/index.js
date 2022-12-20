@@ -10,12 +10,12 @@ const { OnSell } = require('../Database/Model');
 let ruleStart = new schedule.RecurrenceRule();
 ruleStart.tz = 'Asia/Saigon';
 ruleStart.second = 0;
-ruleStart.minute = 39;
+ruleStart.minute = 49;
 ruleStart.hour = 15;
 let ruleEnd = new schedule.RecurrenceRule();
 ruleEnd.tz = 'Asia/Saigon';
 ruleEnd.second = 0;
-ruleEnd.minute = 45;
+ruleEnd.minute = 51;
 ruleEnd.hour = 15;
 
 class CanteenSchedule {
