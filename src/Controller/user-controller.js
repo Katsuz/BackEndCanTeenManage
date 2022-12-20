@@ -177,6 +177,9 @@ class UserController {
                             positionColorArr.push(emptyPosition.color);
                             positionLetterArr.push(emptyPosition.letter);
                         } else {
+                            if (findO[j].product.type == "cake"){
+                                await Product.findOneAndUpdate({ id: id }, { total: findO[j].quantity });
+                            }
                             let emptyPosition = await Position.findOneAndUpdate({ isEmpty: true }, { isEmpty: false });                           
                             positionNumberArr.push(emptyPosition.number);
                             positionColorArr.push(emptyPosition.color);
