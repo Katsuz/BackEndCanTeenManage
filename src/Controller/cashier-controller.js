@@ -556,7 +556,8 @@ class CashierController {
 
     getCompletedBill = async (req, res, next) => {
         try {
-            let findBill = await Bill.find({});
+            let date = req.body.date;
+            let findBill = await Bill.find({ time: { "$regex": date, "$options": "i" } });
             let completedBillArr = [];
             for (let i = 0; i < findBill.length; i++) {
                 if (billservice.isCompletedBill(findBill[i]) && findBill[i].typeBill == "online") {
@@ -566,7 +567,8 @@ class CashierController {
 
             res.json({
                 message: "succesfull",
-                data: completedBillArr
+                data: completedBillArr,
+                date: date
             });
 
         } catch (error) {

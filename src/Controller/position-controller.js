@@ -50,13 +50,13 @@ class PositionController {
 
     setEmptyPositionCode = async (req, res, next) => {
         try {
-            let color = req.body.color;
-            let letter = req.body.letter;
-            let number = req.body.number;
 
-            await Position
-                    .findOneAndUpdate({color: color, letter: letter, number: number},
-                        {isEmpty: true});
+            let arrPosition = req.body.listPosition;
+            for (let i = 0; i < arrPosition.length; i++){
+                await Position
+                .findOneAndUpdate({color: arrPosition[i].color, letter: arrPosition[i].letter, number: arrPosition[i].number},
+                    {isEmpty: true});
+            }
 
             res.json({
                 message: "success"
@@ -94,12 +94,28 @@ class PositionController {
         }
     };
 
+    getListBillUncompleteByID = async(req,res,next) => {
+        try {
+            const listBill = await positionService.getListBillUncompleteByID(req.body.idBill);
+            
+            res.status(status.OK).json({
+                message:"get list success",
+                data: listBill
+            })
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
     setStatusProduct = async(req,res,next) => {
         try {
-            const {idBill} = req.body;
-            const {idProduct} = req.body;
-
-            await billservice.setDoneStatusProductInBillByID(idBill,idProduct);
+            const listBill = req.body.listBill;
+            for (let i = 0; i < listBill.length; i++){
+                for (let j = 0; j < listBill[i].products.length; j++){
+                    await billservice.setDoneStatusProductInBillByID(listBill[i].idBill, listBill[i].products[j]);
+                }
+            }
             
             res.status(status.OK).json({
                 message:"set status product success"
