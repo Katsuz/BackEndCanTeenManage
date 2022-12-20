@@ -34,4 +34,7 @@ route.post('/getTotalMoneySpentInMonth', userController.getTotalMoneySpentInMont
 //POST api/v1/user/logout
 route.post('/logout', userController.logout);
 
+//POST api/v1/user/changeImage
+route.post('/changeImage', userController.changeImage);
+
 module.exports = route;

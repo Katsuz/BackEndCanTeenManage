@@ -219,6 +219,26 @@ const userService = {
         } catch (err) {
             throw err;
         }
+    },
+
+    updateImageUser: async(id, image) => {
+        try {
+            const user = await userRepository.FindUserById(id);
+            if (!user) {
+                throw new Error('user does not exist', {
+                    cause: status.NOT_FOUND
+                })
+            };
+
+            user = await userRepository.UpdateImageUser(id, image);
+
+            return formatData({
+                userUpdated
+            })
+
+        } catch (err) {
+            throw err;
+        }
     }
 }
 

@@ -10,6 +10,7 @@ const userRepository = {
                 password: password,
                 IdUser: IdUser,
                 roleID: role,
+                image: "https://haycafe.vn/wp-content/uploads/2022/08/hinh-anh-avatar-Luffy.jpg"
             })
             
             //save into database
@@ -105,6 +106,18 @@ const userRepository = {
                 }
             })
         } catch(err){   
+            throw err;
+        }
+    },
+
+    UpdateImageUser: async(id, image) =>{
+        try{
+            await User.updateOne({_id: id},{
+                $set: {
+                    image: image
+                }
+            })
+        } catch(err) {
             throw err;
         }
     }

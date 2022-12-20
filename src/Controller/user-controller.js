@@ -358,6 +358,21 @@ class UserController {
         }
        
     }
+
+    changeImage = async(req,res,next) => {
+        try{
+            const { _id } = req.user;
+            const image = req.body.image;
+            const { userUpdated } = await userService.updateImageUser(_id, image);
+
+            res.status(status.OK).json({
+                message: 'update success',
+                data: userUpdated,
+            })
+        } catch(err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = UserController;

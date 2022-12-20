@@ -28,6 +28,8 @@ const User = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'role',
     },
+
+    image: String,
 });
 
 module.exports = model('user',User);
