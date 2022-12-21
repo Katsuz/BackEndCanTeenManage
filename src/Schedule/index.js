@@ -1,8 +1,4 @@
 const schedule = require('node-schedule');
-const startHour = 6;
-const startMinute = 0;
-const endHour = 15;
-const endMinute = 0;
 const dateOpen = [1, 2, 3, 4, 5, 6]; //monday-saturday
 var isReseted = false;
 const { Product } = require('../Database/Model');
@@ -15,8 +11,8 @@ ruleStart.hour = 6;
 let ruleEnd = new schedule.RecurrenceRule();
 ruleEnd.tz = 'Asia/Saigon';
 ruleEnd.second = 0;
-ruleEnd.minute = 51;
-ruleEnd.hour = 0;
+ruleEnd.minute = 7;
+ruleEnd.hour = 1;
 
 class CanteenSchedule {
 
