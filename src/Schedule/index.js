@@ -11,8 +11,8 @@ ruleStart.hour = 6;
 let ruleEnd = new schedule.RecurrenceRule();
 ruleEnd.tz = 'Asia/Saigon';
 ruleEnd.second = 0;
-ruleEnd.minute = 15;
-ruleEnd.hour = 1;
+ruleEnd.minute = 0;
+ruleEnd.hour = 18;
 
 class CanteenSchedule {
 
@@ -56,15 +56,9 @@ class CanteenSchedule {
                 let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
             }
         });
+
         const end = schedule.scheduleJob(ruleEnd, async function () {
             console.log('Close!');
-
-            let findOnSell = await OnSell.find({});
-
-            for (let i = 0; i < findOnSell.length; i++) {
-                findOnSell[i].quantity = 0;
-                await findOnSell[i].save();
-            }
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
         });
 
@@ -76,8 +70,6 @@ class CanteenSchedule {
             let today = new Date();
             today = new Date(today.toLocaleString('en-US', { timeZone: 'Asia/Saigon' }))
             today = today.getDay();
-            //today = 6;
-            //console.log(today);
 
             let deleteO = await OnSell.deleteMany({}); //Reset lai danh sach hang hoa hom nay
             
